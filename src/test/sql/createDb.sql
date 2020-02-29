@@ -44,8 +44,8 @@ create table number_of_product(
 );
 create table sale_of_product(
                                 id serial primary key,
-                                number int,
-                                foreign key (number) references number_of_product(id),
+                                number_id int,
+                                foreign key (number_id) references number_of_product(id),
                                 warehouse_id int,
                                 foreign key (warehouse_id) references warehouse(id),
                                 list_of_product_id int,
@@ -53,8 +53,8 @@ create table sale_of_product(
 );
 create table arrival_of_product(
                                    id serial primary key,
-                                   number int,
-                                   foreign key (number) references number_of_product(id),
+                                   number_id int,
+                                   foreign key (number_id) references number_of_product(id),
                                    warehouse_id int,
                                    foreign key (warehouse_id) references warehouse(id),
                                    list_of_product_id int,
@@ -62,8 +62,8 @@ create table arrival_of_product(
 );
 create table moving_of_product(
                                   id serial primary key,
-                                  number int,
-                                  foreign key (number) references number_of_product(id),
+                                  number_id int,
+                                  foreign key (number_id) references number_of_product(id),
                                   warehouseA_id int,
                                   foreign key (warehouseA_id) references warehouse(id),
                                   warehouseB_id int,
