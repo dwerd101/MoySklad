@@ -72,6 +72,12 @@ create table moving_of_product(
                                   foreign key (list_of_product_id) references list_of_product(id)
 );
 
+create table user_account(
+    id serial primary key ,
+    name varchar(50),
+    password varchar(50)
+);
+
 insert into Product values (1,'s20', 'samsung galaxy s20', 700, 1100);
 insert into Product values (2,'s10', 'samsung galaxy s10', 500, 800);
 insert into Product values (3, 'MQAD2RU/A', 'IPhone 10', 500, 999);
@@ -99,11 +105,12 @@ insert into list_of_product(product_id, quantity, purchase_price_id, selling_pri
 insert into number_of_product(number) values (1231);
 insert into number_of_product(number) values (1232);
 
-insert into sale_of_product(number, warehouse_id, list_of_product_id) VALUES (1,1,1);
-insert into sale_of_product(number, warehouse_id, list_of_product_id) VALUES (2,2,2);
-insert into arrival_of_product(number, warehouse_id, list_of_product_id) VALUES (1,1,1);
-insert into arrival_of_product(number, warehouse_id, list_of_product_id) VALUES (2,2,2);
-insert into moving_of_product(number, warehouseA_id, warehouseB_id, list_of_product_id) VALUES (1,1,2,1);
+insert into sale_of_product(number_id, warehouse_id, list_of_product_id) VALUES (1,1,1);
+insert into sale_of_product(number_id, warehouse_id, list_of_product_id) VALUES (2,2,2);
+insert into arrival_of_product(number_id, warehouse_id, list_of_product_id) VALUES (1,1,1);
+insert into arrival_of_product(number_id, warehouse_id, list_of_product_id) VALUES (2,2,2);
+insert into moving_of_product(number_id, warehouseA_id, warehouseB_id, list_of_product_id) VALUES (1,1,2,1);
+
 
 /*Тест*/ 
 select product_name as product_id, quantity, purchase_price_id, purchase_price_id, selling_price_id from list_of_product inner join Product P on list_of_product.product_id = P.id;
