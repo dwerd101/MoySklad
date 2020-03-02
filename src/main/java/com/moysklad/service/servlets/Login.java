@@ -1,4 +1,4 @@
-package com.moySklad.service.servlets;
+package com.moysklad.service.servlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
