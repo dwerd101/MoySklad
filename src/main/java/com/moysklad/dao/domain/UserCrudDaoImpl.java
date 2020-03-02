@@ -1,14 +1,20 @@
 package com.moysklad.dao.domain;
 
 import com.moySklad.dao.domain.UserAccountDao;
-import com.moysklad.dao.CrudDao;
 import com.moysklad.model.UserAccount;
-import  com.moysklad.service.connection.ConnectionImpl;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import com.moysklad.service.connection.ConnectionDataBaseFactory;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserCrudDaoImpl implements UserAccountDao {
+
+    Connection connection;
+    //language=SQL
+    private final String SQL_SELECT_ALL = " SELECT * from user_account";
     //language=sql
     private final String SQL_ADD_USER = "INSERT INTO user_account(name, password) VALUES (?,?)";
     //language=sql
@@ -16,15 +22,18 @@ public class UserCrudDaoImpl implements UserAccountDao {
     //language=sql
     private final String SQL_UPDATE_USER = "UPDATE user_account SET name=?, password = ? WHERE user_account.id = ?";
 
-    Connection connection;
+    private static class SingletonHelper {
+        private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
+    }
 
-    public UserCrudDaoImpl() {
-        connection = new ConnectionImpl().getConnection();
+    public static UserCrudDaoImpl getInstance() {
+        return SingletonHelper.INSTANCE;
     }
 
     @Override
     public void save(UserAccount model) {
         try {
+            connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_USER);
             preparedStatement.setString(1, model.getName());
             preparedStatement.setString(2, model.getPassword());
@@ -37,6 +46,7 @@ public class UserCrudDaoImpl implements UserAccountDao {
     @Override
     public void update(UserAccount model, Integer id) {
         try {
+            connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER);
             preparedStatement.setString(1, model.getName());
             preparedStatement.setString(2, model.getPassword());
@@ -50,6 +60,7 @@ public class UserCrudDaoImpl implements UserAccountDao {
     @Override
     public void delete(Integer id) {
         try {
+            connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
@@ -57,5 +68,34 @@ public class UserCrudDaoImpl implements UserAccountDao {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean isExist(String name, String password) {
+        List<UserAccount> userList = findAll();
+        for (UserAccount user : userList) {
+            boolean matched = BCrypt.checkpw(password, user.getPassword());
+            if (user.getName().equals(name) && matched) {
+                return true;
+            }
+        }
+    return false;
+    }
+
+    public List<UserAccount> findAll() {
+        try {
+            List<UserAccount> userList = new ArrayList<>();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String password = resultSet.getString("password");
+                UserAccount userAccount = new UserAccount(name, password);
+                userList.add(userAccount);
+            }
+            return userList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

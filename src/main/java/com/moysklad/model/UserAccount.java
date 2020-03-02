@@ -1,11 +1,6 @@
 package com.moysklad.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class UserAccount {
     private String name, password;
 
@@ -13,4 +8,13 @@ public class UserAccount {
         this.name = name;
         this.password = password;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 }

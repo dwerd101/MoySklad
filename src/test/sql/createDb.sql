@@ -75,7 +75,7 @@ create table moving_of_product(
 create table user_account(
     id serial primary key ,
     name varchar(50),
-    password varchar(50)
+    password varchar(100)
 );
 
 insert into Product values (1,'s20', 'samsung galaxy s20', 700, 1100);
