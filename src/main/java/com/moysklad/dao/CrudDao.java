@@ -1,8 +1,7 @@
 package com.moysklad.dao;
 
 public interface CrudDao<T> {
-    void create( T model);
-    void read (T model);
-    void update (T model);
+    void save (T model);
+    void update (T model, Integer id);
     void delete (Integer id);
 }

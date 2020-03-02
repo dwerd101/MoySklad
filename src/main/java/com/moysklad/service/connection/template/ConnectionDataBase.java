@@ -1,5 +1,7 @@
 package com.moysklad.service.connection.template;
 
-public interface ConnectionDataBase {
-    void connection();
+import java.sql.Connection;
+
+public interface ConnectionDataBase{
+    Connection getConnection();
 }

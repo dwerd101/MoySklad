@@ -1,0 +1,9 @@
+D:\IDEA\MoySklad\src\main\java\com\moySklad\model\UserAccount.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\service\servlets\Login.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\service\connection\ConnectionImpl.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\dao\domain\UserCrudDaoImpl.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\service\crypt\template\CryptPassword.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\dao\CrudDao.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\service\connection\template\ConnectionDataBase.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\dao\domain\UserAccountDao.java
+D:\IDEA\MoySklad\src\main\java\com\moySklad\service\crypt\CryptPasswordImpl.java

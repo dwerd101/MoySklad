@@ -1,0 +1,9 @@
+com\moysklad\service\crypt\template\CryptPassword.class
+com\moysklad\service\crypt\CryptPasswordImpl.class
+com\moysklad\dao\domain\UserCrudDaoImpl.class
+com\moysklad\dao\CrudDao.class
+com\moysklad\service\connection\ConnectionImpl.class
+com\moysklad\service\connection\template\ConnectionDataBase.class
+com\moysklad\model\UserAccount.class
+com\moysklad\service\servlets\Login.class
+com\moysklad\dao\domain\UserAccountDao.class
