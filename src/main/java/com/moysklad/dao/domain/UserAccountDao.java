@@ -1,6 +1,10 @@
-package com.moySklad.dao.domain;
+package com.moysklad.dao.domain;
 import  com.moysklad.dao.CrudDao;
 import com.moysklad.model.UserAccount;
-public interface UserAccountDao extends CrudDao<UserAccount>{
 
+import java.util.List;
+
+public interface UserAccountDao extends CrudDao<UserAccount>{
+    boolean isExist(String name, String password);
+    List<UserAccount> findAll();
 }

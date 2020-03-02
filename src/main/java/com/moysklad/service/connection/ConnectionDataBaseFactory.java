@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class ConnectionDataBaseFactory {
@@ -18,10 +19,11 @@ public class ConnectionDataBaseFactory {
 
          ConnectionDataBaseFactory() {
                 DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+                String rootPath = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("/modelDataBase/properties/db.properties")).getPath();
                 Properties properties = new Properties();
                 FileInputStream fis = null;
                 try {
-                        fis = new FileInputStream("src/main/resources/modelDataBase/properties/db.properties");
+                        fis = new FileInputStream(rootPath);
                         properties.load(fis);
                         String name = properties.getProperty("db.username");
                         String url = properties.getProperty("db.url");
@@ -29,8 +31,10 @@ public class ConnectionDataBaseFactory {
                         driverManagerDataSource.setUsername(name);
                         driverManagerDataSource.setUrl(url);
                         driverManagerDataSource.setPassword(password);
+                    String driverClazz = properties.getProperty("db.driver");
+                    Class.forName(driverClazz);
 
-                } catch (IOException e) {
+                } catch (IOException | ClassNotFoundException e) {
                         e.printStackTrace();
                 } finally {
                         try {

@@ -18,7 +18,7 @@
     <div class="underline">
     </div>
     <center>
-        <form action="/login" method="post">
+        <form action="${pageContext.request.contextPath}/login" method="post">
             <div class="login">
                 <label for="login"></label>
                 <input type="text" placeholder="login" style="text-align: center" name="login" id="login" required>

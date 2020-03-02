@@ -3,7 +3,7 @@ package User;
 import com.moysklad.dao.domain.UserCrudDaoImpl;
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.crypt.CryptPasswordImpl;
-import com.moySklad.dao.domain.UserAccountDao;
+import com.moysklad.dao.domain.UserAccountDao;
 
 
 public class AddUser {

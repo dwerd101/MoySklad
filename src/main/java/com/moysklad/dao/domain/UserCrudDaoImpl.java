@@ -1,6 +1,6 @@
 package com.moysklad.dao.domain;
 
-import com.moySklad.dao.domain.UserAccountDao;
+import com.moysklad.dao.domain.UserAccountDao;
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -70,7 +70,9 @@ public class UserCrudDaoImpl implements UserAccountDao {
 
     }
 
+    @Override
     public boolean isExist(String name, String password) {
+
         List<UserAccount> userList = findAll();
         for (UserAccount user : userList) {
             boolean matched = BCrypt.checkpw(password, user.getPassword());
@@ -78,12 +80,14 @@ public class UserCrudDaoImpl implements UserAccountDao {
                 return true;
             }
         }
-    return false;
+        return false;
     }
 
+    @Override
     public List<UserAccount> findAll() {
         try {
             List<UserAccount> userList = new ArrayList<>();
+            connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
             while (resultSet.next()) {
