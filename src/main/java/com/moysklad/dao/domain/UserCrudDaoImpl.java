@@ -3,6 +3,7 @@ package com.moysklad.dao.domain;
 import com.moysklad.dao.domain.UserAccountDao;
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
+import com.moysklad.service.crypt.CryptPasswordImpl;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.sql.*;
@@ -75,7 +76,7 @@ public class UserCrudDaoImpl implements UserAccountDao {
 
         List<UserAccount> userList = findAll();
         for (UserAccount user : userList) {
-            boolean matched = BCrypt.checkpw(password, user.getPassword());
+            boolean matched = new CryptPasswordImpl().checkPassword(password, user.getPassword());
             if (user.getName().equals(name) && matched) {
                 return true;
             }
