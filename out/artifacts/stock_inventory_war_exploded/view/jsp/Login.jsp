@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,24 +19,20 @@
     <div class="underline">
     </div>
     <center>
-        <form action="${pageContext.request.contextPath}/login" method="post">
-            <div class="login">
-                <label for="login"></label>
-                <input type="text" placeholder="login" style="text-align: center" name="login" id="login" required>
+        <form action="" method="post">
+            <div class="Login">
+                <label for="Login"></label>
+                <input type="text" placeholder="Login" style="text-align: center" name="Login" id="Login" required>
             </div>
             <div class="password">
                 <label for="password"></label>
                 <input type="password" placeholder="password" style="text-align: center" name="password" id="password" required>
             </div>
             <input type="submit" value="Login" style="text-align: center; margin-top: 5%" id="form_button" />
-        </form>
+        </form><!-- // End form -->
     </center>
-</div>
-<form>
-    <center>
-        <input type="button" value="SignUp" onClick='location.href="/signUp"' id="buttonLeft"/>
-    </center>
-</form>
+</div><!-- // End #container -->
+
 
 </body>
 </html>

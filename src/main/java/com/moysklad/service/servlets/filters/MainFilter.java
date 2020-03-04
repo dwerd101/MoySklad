@@ -1,0 +1,32 @@
+package com.moysklad.service.servlets.filters;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
+@WebFilter("/window/*")
+public class MainFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+
+    }
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest servletRequest = (HttpServletRequest) request;
+        HttpServletResponse servletResponse = (HttpServletResponse) response;
+        HttpSession session = servletRequest.getSession(false);
+
+        if( session == null || session.getAttribute("userAccount") == null) {
+            servletResponse.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            return;
+        }
+        chain.doFilter(servletRequest, servletResponse);
+    }
+    @Override
+    public void destroy() {
+
+    }
+}
