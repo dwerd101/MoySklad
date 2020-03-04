@@ -2,6 +2,7 @@ package com.moysklad.service.servlets.filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,11 +19,19 @@ public class MainFilter implements Filter {
         HttpServletRequest servletRequest = (HttpServletRequest) request;
         HttpServletResponse servletResponse = (HttpServletResponse) response;
         HttpSession session = servletRequest.getSession(false);
+        Cookie[] cookies = servletRequest.getCookies();
+        int count = 0;
+        for (Cookie c : cookies) {
+        if(c.getName().equals("Login")) {
+            count++;
+        }
+        }
+        if( session == null || session.getAttribute("userAccount") == null || count==0) {
 
-        if( session == null || session.getAttribute("userAccount") == null) {
             servletResponse.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
             return;
         }
+
         chain.doFilter(servletRequest, servletResponse);
     }
     @Override

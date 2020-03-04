@@ -20,7 +20,7 @@ public class MainLoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+        forwardLogin(req, resp);
     }
 
     @Override
@@ -35,21 +35,32 @@ public class MainLoginServlet extends HttpServlet {
         //Тестовая реализация
         Cookie cookie = new Cookie("Login", "yes");
         Cookie[] cookies = req.getCookies();
-        if(cookies!=null ) {
-            for (Cookie c: cookies
-                 ) {
+        int countCookie = 0;
+        if (cookies != null) {
+            for (Cookie c : cookies
+            ) {
                 if (c.getName().equals("Login")) {
                     req.getServletContext().getRequestDispatcher("/view/jsp/startPageBox.jsp").forward(req, resp);
+                    countCookie++;
                 }
-
             }
         }
-        if (userAccount.isExist(name, password)) {
-            HttpSession session = req.getSession();
-            session.setAttribute("userAccount", name);
-            resp.addCookie(cookie);
-            req.getServletContext().getRequestDispatcher("/view/jsp/startPageBox.jsp").forward(req, resp);
-        } else {
+        try {
+            if (name != null && password != null) {
+                if (userAccount.isExist(name, password)) {
+                    session = req.getSession();
+                    session.setAttribute("userAccount", name);
+                    resp.addCookie(cookie);
+                    req.getServletContext().getRequestDispatcher("/view/jsp/startPageBox.jsp").forward(req, resp);
+                } else {
+                    req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+                }
+            } else if (countCookie == 0 && session.getAttribute("userAccount") != null) {
+                HttpSession session = req.getSession();
+                session.removeAttribute("userAccount");
+                req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+            } else req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+        } catch (NullPointerException e) {
             req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
         }
     }
