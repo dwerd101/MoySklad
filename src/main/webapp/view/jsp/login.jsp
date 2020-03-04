@@ -15,20 +15,20 @@
 </head>
 <body>
 <div id="container">
-    <h1><span style="color: #FF0066">&bull;</span> Login <span style="color: #FF0066">&bull;</span></h1>
+    <h1><span style="color: #FF0066">&bull;</span> Авторизация <span style="color: #FF0066">&bull;</span></h1>
     <div class="underline">
     </div>
     <center>
         <form action="" method="post">
             <div class="Login">
                 <label for="Login"></label>
-                <input type="text" placeholder="Login" style="text-align: center" name="Login" id="Login" required>
+                <input type="text" placeholder="Логин" style="text-align: center" name="Login" id="Login" required>
             </div>
             <div class="password">
                 <label for="password"></label>
-                <input type="password" placeholder="password" style="text-align: center" name="password" id="password" required>
+                <input type="password" placeholder="Пароль" style="text-align: center" name="password" id="password" required>
             </div>
-            <input type="submit" value="Login" style="text-align: center; margin-top: 5%" id="form_button" />
+            <input type="submit" value="Авторизоваться" style="text-align: center; margin-top: 5%" id="form_button" />
         </form><!-- // End form -->
     </center>
 </div><!-- // End #container -->

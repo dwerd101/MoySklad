@@ -32,17 +32,17 @@ public class MainLoginServlet extends HttpServlet {
         userAccount = new UserCrudDaoImpl();
         String name = req.getParameter("Login");
         String password = req.getParameter("password");
-        //Тестовая реализация
         Cookie cookie = new Cookie("Login", "yes");
         Cookie[] cookies = req.getCookies();
         int countCookie = 0;
         if (cookies != null) {
             for (Cookie c : cookies
             ) {
-                if (c.getName().equals("Login")) {
-                    req.getServletContext().getRequestDispatcher("/view/jsp/startPageBox.jsp").forward(req, resp);
+                if (c.getName().equals("Login") && session!=null) {
+                    resp.sendRedirect(req.getContextPath()+"/window/");
                     countCookie++;
-                }
+                return;
+            }
             }
         }
         try {
@@ -51,7 +51,7 @@ public class MainLoginServlet extends HttpServlet {
                     session = req.getSession();
                     session.setAttribute("userAccount", name);
                     resp.addCookie(cookie);
-                    req.getServletContext().getRequestDispatcher("/view/jsp/startPageBox.jsp").forward(req, resp);
+                    resp.sendRedirect(req.getContextPath()+"/window/");
                 } else {
                     req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
                 }

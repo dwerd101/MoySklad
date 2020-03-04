@@ -14,6 +14,7 @@ public class MainFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest servletRequest = (HttpServletRequest) request;
@@ -21,12 +22,14 @@ public class MainFilter implements Filter {
         HttpSession session = servletRequest.getSession(false);
         Cookie[] cookies = servletRequest.getCookies();
         int count = 0;
-        for (Cookie c : cookies) {
-        if(c.getName().equals("Login")) {
-            count++;
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("Login")) {
+                    count++;
+                }
+            }
         }
-        }
-        if( session == null || session.getAttribute("userAccount") == null || count==0) {
+        if (session == null || session.getAttribute("userAccount") == null || count == 0) {
 
             servletResponse.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
             return;
@@ -34,6 +37,7 @@ public class MainFilter implements Filter {
 
         chain.doFilter(servletRequest, servletResponse);
     }
+
     @Override
     public void destroy() {
 

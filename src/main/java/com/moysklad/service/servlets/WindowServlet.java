@@ -11,7 +11,7 @@ import java.io.IOException;
 public class WindowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        req.getServletContext().getRequestDispatcher("/view/jsp/window.jsp").forward(req, resp);
     }
 
     @Override

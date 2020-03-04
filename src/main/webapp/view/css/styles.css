@@ -178,7 +178,7 @@ textarea {
     color: #ffffff;
 }
 
-#form_button, #form_button1 {
+#form_button, #form_button1, #form_button2 {
     background: none;
     border: solid 2px #FF0066;
     color:  #FF0066;
@@ -218,7 +218,7 @@ textarea {
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-#form_button:hover,#buttonLeft:hover, #buttonRight:hover, #form_button1:hover  {
+#form_button:hover,#buttonLeft:hover, #buttonRight:hover, #form_button1:hover, #form_button2:hover  {
     background: #FF0066;
     color: #ffffff;
 }
@@ -254,6 +254,9 @@ textarea {
         padding: 15px 25px;
     }
     .form_button1 {
+        padding: 15px 25px;
+    }
+    .form_button2 {
         padding: 15px 25px;
     }
 
