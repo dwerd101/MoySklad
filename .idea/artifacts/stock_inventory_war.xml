@@ -1,7 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="war" name="stock-inventory:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/stock_inventory_war</output-path>
-    <root id="archive" name="stock-inventory_war.war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>stock-inventory</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="stock-inventory-1.0.war">
       <element id="artifact" artifact-name="stock-inventory:war exploded" />
     </root>
   </artifact>

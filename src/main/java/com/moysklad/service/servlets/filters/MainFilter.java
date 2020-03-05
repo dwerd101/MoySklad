@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/window/*")
+//@WebFilter("/window/*")
 public class MainFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
