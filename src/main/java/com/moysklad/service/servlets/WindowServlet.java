@@ -33,13 +33,12 @@ public class WindowServlet extends HttpServlet {
         String requestPath = request.getRequestURI();
         switch (requestPath) {
             case "/window/receipt":
-                request.getServletContext().getRequestDispatcher("/view/jsp/receipt.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/view/jsp/test.jsp").forward(request, response);
                 break;
             case "/window/":
                 doGet(request, response);
                 break;
             case  "/window/receipt/view_all_documents":
-
                 break;
         }
     }

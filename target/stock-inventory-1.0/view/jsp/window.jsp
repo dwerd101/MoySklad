@@ -19,14 +19,14 @@
     </div>
     <center>
 <%--        Тестирование --%>
-        <form action="${pageContext.request.contextPath}/window/receipt" method="post" enctype="multipart/form-data">
-            <input type="submit" value="Поступление"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"  multiple="multiple" />
+        <form action="${pageContext.request.contextPath}/window/receipt" method="post" >
+            <input type="submit" value="Поступление"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"   />
         </form>
         <form action="" method="post">
-            <input type="submit" value="Продажа" style="text-align: center; margin: -4%; padding: 30px 73px;"  id="form_button1"  multiple="multiple"/>
+            <input type="submit" value="Продажа" style="text-align: center; margin: -4%; padding: 30px 73px;"  id="form_button1"  />
         </form>
         <form action="" method="post">
-            <input type="submit" value="Перемещение"  id="form_button2" style="padding: 30px 55px;"  multiple="multiple"/>
+            <input type="submit" value="Перемещение"  id="form_button2" style="padding: 30px 55px;"  />
         </form>
     </center>
 </div>

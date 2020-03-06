@@ -1,6 +1,4 @@
 package com.moysklad.model;
-
-
 public class UserAccount {
     private String name, password;
 

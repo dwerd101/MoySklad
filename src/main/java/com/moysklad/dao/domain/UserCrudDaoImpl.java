@@ -1,13 +1,13 @@
 package com.moysklad.dao.domain;
 
-import com.moysklad.dao.domain.UserAccountDao;
+
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import com.moysklad.service.crypt.CryptPasswordImpl;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+
 
 import java.sql.*;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
