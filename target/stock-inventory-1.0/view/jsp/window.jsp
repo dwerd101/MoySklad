@@ -18,9 +18,9 @@
     <div class="underline">
     </div>
     <center>
-        <form action="${pageContext.request.contextPath}/window/" method="post" enctype="multipart/form-data">
-            <input type="file" value="Поступление" name="fileName1" style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"  multiple="multiple" />
-            <input type="submit" value="Продаmmmжа" style="text-align: center; margin: -4%; padding: 30px 73px;" />
+<%--        Тестирование --%>
+        <form action="${pageContext.request.contextPath}/window/receipt" method="post" enctype="multipart/form-data">
+            <input type="submit" value="Поступление"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"  multiple="multiple" />
         </form>
         <form action="" method="post">
             <input type="submit" value="Продажа" style="text-align: center; margin: -4%; padding: 30px 73px;"  id="form_button1"  multiple="multiple"/>

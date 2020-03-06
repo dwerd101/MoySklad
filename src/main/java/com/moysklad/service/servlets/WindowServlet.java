@@ -30,7 +30,22 @@ public class WindowServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String requestPath = request.getRequestURI();
+        switch (requestPath) {
+            case "/window/receipt":
+                request.getServletContext().getRequestDispatcher("/view/jsp/receipt.jsp").forward(request, response);
+                break;
+            case "/window/":
+                doGet(request, response);
+                break;
+            case  "/window/receipt/view_all_documents":
 
+                break;
+        }
+    }
+
+
+    private void addFilesOnServer(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String applicationPath = request.getServletContext().getRealPath("");
         // создает путь к каталогу для сохранения загруженного файла
         String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
