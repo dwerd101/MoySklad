@@ -3,6 +3,8 @@ package com.moysklad.service.servlets;
 import com.moysklad.dao.domain.ArrivalProductDaoImpl;
 import com.moysklad.model.ArrivalOrSaleOfProduct;
 import com.moysklad.view.ArrivalProductView;
+import com.moysklad.view.MovingProductView;
+import com.moysklad.view.SaleProductView;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,9 +45,25 @@ public class WindowServlet extends HttpServlet {
                 request.getServletContext().getRequestDispatcher("/view/jsp/arrival.jsp").forward(request, response);
                 break;
             case  "/window/arrival/view_all_document":
-                List<ArrivalProductView> products = new ArrivalProductView().findAllView();
-                request.setAttribute("ArrivalProduct", products);
+                List<ArrivalProductView> arrivalProducts = new ArrivalProductView().findAllView();
+                request.setAttribute("ArrivalProduct", arrivalProducts);
                 request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalViewDocument.jsp").forward(request,response);
+                break;
+            case "/window/sale":
+                request.getServletContext().getRequestDispatcher("/view/jsp/sale.jsp").forward(request,response);
+                break;
+            case "/window/sale/view_all_document":
+                List<SaleProductView> saleProducts = new SaleProductView().findAllView();
+                request.setAttribute("SaleProduct", saleProducts);
+                request.getServletContext().getRequestDispatcher("/view/jsp/DbSaleViewDocument.jsp").forward(request,response);
+                break;
+            case "/window/moving":
+                request.getServletContext().getRequestDispatcher("/view/jsp/moving.jsp").forward(request,response);
+                break;
+            case "/window/moving/view_all_document":
+                List<MovingProductView> movingProducts = new MovingProductView().findAllView();
+                request.setAttribute("MovingProduct",movingProducts);
+                request.getServletContext().getRequestDispatcher("/view/jsp/DbMovingViewDocument.jsp").forward(request,response);
                 break;
         }
     }

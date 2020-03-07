@@ -121,8 +121,17 @@ CREATE VIEW ArrivalListProduct AS
 SELECT arrival_of_product.number_id, arrival_of_product.warehouse_id, arrival_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity, purchase_price.price
 from arrival_of_product inner join list_of_product  on arrival_of_product.id = list_of_product.product_id
 inner join product on list_of_product.product_id = Product.id
-inner join purchase_price on list_of_product.purchase_price_id = purchase_price.id
+inner join purchase_price on list_of_product.purchase_price_id = purchase_price.id;
 
-SELECT * from ArrivalListProduct
+SELECT * from ArrivalListProduct;
 
+CREATE VIEW SaleListProduct AS
+SELECT sale_of_product.number_id, sale_of_product.warehouse_id, sale_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity, selling_price.price
+from sale_of_product inner join list_of_product  on sale_of_product.id = list_of_product.product_id
+                        inner join product on list_of_product.product_id = Product.id
+                        inner join Selling_price on list_of_product.purchase_price_id = Selling_price.id;
 
+CREATE view MovingListProduct AS
+SELECT moving_of_product.number_id, moving_of_product.warehousea_id, moving_of_product.warehouseb_id, moving_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity
+from moving_of_product inner join list_of_product  on moving_of_product.id = list_of_product.product_id
+                     inner join product on list_of_product.product_id = Product.id;

@@ -22,10 +22,10 @@
         <form action="${pageContext.request.contextPath}/window/arrival" method="post" >
             <input type="submit" value="Поступление"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"   />
         </form>
-        <form action="" method="post">
+        <form action="${pageContext.request.contextPath}/window/sale" method="post">
             <input type="submit" value="Продажа" style="text-align: center; margin: -4%; padding: 30px 73px;"  id="form_button1"  />
         </form>
-        <form action="" method="post">
+        <form action="${pageContext.request.contextPath}/window/moving" method="post">
             <input type="submit" value="Перемещение"  id="form_button2" style="padding: 30px 55px;"  />
         </form>
     </center>

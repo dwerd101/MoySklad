@@ -9,42 +9,44 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
-public class ArrivalProductView implements View<ArrivalProductView>{
+public class MovingProductView implements View<MovingProductView> {
     Connection connection;
-
-    //language=sql
-    private final String SQL_SELECT_ALL_VIEW = "SELECT * from ArrivalListProduct";
-
-    private int numberId, warehouseId, listOfProductId, productId, quantity, price;
+    private int numberId, warehouseAId, warehouseBId, listOfProductId, productId, quantity;
     private String productName;
-    public ArrivalProductView() { }
-    public ArrivalProductView(int numberId, int warehouseId, int listOfProductId, String productName, int productId, int quantity, int price) {
+    //language=sql
+    private final String SQL_SELECT_ALL_VIEW = "SELECT * from movinglistproduct";
+
+    public MovingProductView() {
+    }
+
+    public MovingProductView(int numberId, int warehouseAId, int warehouseBId, int listOfProductId, int productId, int quantity, String productName) {
         this.numberId = numberId;
-        this.warehouseId = warehouseId;
+        this.warehouseAId = warehouseAId;
+        this.warehouseBId = warehouseBId;
         this.listOfProductId = listOfProductId;
         this.productId = productId;
         this.quantity = quantity;
-        this.price = price;
         this.productName = productName;
     }
 
     @Override
-    public List<ArrivalProductView> findAllView() {
+    public List<MovingProductView> findAllView() {
         try {
-            List<ArrivalProductView> products = new ArrayList<>();
+            List<MovingProductView> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_VIEW);
             while (resultSet.next()) {
                 int numberId = resultSet.getInt("number_id");
-                int warehouseId = resultSet.getInt("warehouse_id");
+                int warehouseAId = resultSet.getInt("warehousea_id");
+                int warehouseBId = resultSet.getInt("warehouseb_id");
                 int listOfProductId = resultSet.getInt("list_of_product_id");
                 String productName = resultSet.getString("product_name");
                 int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
-                int price = resultSet.getInt("price");
-                ArrivalProductView productView = new ArrivalProductView(numberId, warehouseId, listOfProductId, productName, productId, quantity, price);
+                MovingProductView productView = new MovingProductView(numberId, warehouseAId, warehouseBId, listOfProductId, productId, quantity, productName);
                 products.add(productView);
             }
             return products;

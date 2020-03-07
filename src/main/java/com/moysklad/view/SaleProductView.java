@@ -9,17 +9,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
-public class ArrivalProductView implements View<ArrivalProductView>{
+public class SaleProductView implements View<SaleProductView> {
     Connection connection;
 
     //language=sql
-    private final String SQL_SELECT_ALL_VIEW = "SELECT * from ArrivalListProduct";
+    private final String SQL_SELECT_ALL_VIEW = "SELECT * from salelistproduct";
 
     private int numberId, warehouseId, listOfProductId, productId, quantity, price;
     private String productName;
-    public ArrivalProductView() { }
-    public ArrivalProductView(int numberId, int warehouseId, int listOfProductId, String productName, int productId, int quantity, int price) {
+    public SaleProductView() { }
+    public SaleProductView(int numberId, int warehouseId, int listOfProductId, String productName, int productId, int quantity, int price) {
         this.numberId = numberId;
         this.warehouseId = warehouseId;
         this.listOfProductId = listOfProductId;
@@ -28,11 +29,9 @@ public class ArrivalProductView implements View<ArrivalProductView>{
         this.price = price;
         this.productName = productName;
     }
-
-    @Override
-    public List<ArrivalProductView> findAllView() {
+    public List<SaleProductView> findAllView() {
         try {
-            List<ArrivalProductView> products = new ArrayList<>();
+            List<SaleProductView> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_VIEW);
@@ -44,7 +43,7 @@ public class ArrivalProductView implements View<ArrivalProductView>{
                 int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
                 int price = resultSet.getInt("price");
-                ArrivalProductView productView = new ArrivalProductView(numberId, warehouseId, listOfProductId, productName, productId, quantity, price);
+                SaleProductView productView = new SaleProductView(numberId, warehouseId, listOfProductId, productName, productId, quantity, price);
                 products.add(productView);
             }
             return products;
