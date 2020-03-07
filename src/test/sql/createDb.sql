@@ -102,6 +102,7 @@ values (800);
 
 insert into list_of_product(product_id, quantity, purchase_price_id, selling_price_id) values (1,50,2,2);
 insert into list_of_product(product_id, quantity, purchase_price_id, selling_price_id) VALUES (3,100,2,2);
+insert into list_of_product(product_id, quantity, purchase_price_id, selling_price_id) VALUES (2,400,2,2);
 insert into number_of_product(number) values (1231);
 insert into number_of_product(number) values (1232);
 
@@ -109,9 +110,19 @@ insert into sale_of_product(number_id, warehouse_id, list_of_product_id) VALUES 
 insert into sale_of_product(number_id, warehouse_id, list_of_product_id) VALUES (2,2,2);
 insert into arrival_of_product(number_id, warehouse_id, list_of_product_id) VALUES (1,1,1);
 insert into arrival_of_product(number_id, warehouse_id, list_of_product_id) VALUES (2,2,2);
+insert into arrival_of_product(number_id, warehouse_id, list_of_product_id) VALUES (2,3,3);
 insert into moving_of_product(number_id, warehouseA_id, warehouseB_id, list_of_product_id) VALUES (1,1,2,1);
 
 
 /*Тест*/ 
 select product_name as product_id, quantity, purchase_price_id, purchase_price_id, selling_price_id from list_of_product inner join Product P on list_of_product.product_id = P.id;
 SELECT warehouse.id, product_name, product_id, quantity FROM warehouse inner join Product on warehouse.product_id = Product.id and last_purchase_price>500;
+CREATE VIEW ArrivalListProduct AS
+SELECT arrival_of_product.number_id, arrival_of_product.warehouse_id, arrival_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity, purchase_price.price
+from arrival_of_product inner join list_of_product  on arrival_of_product.id = list_of_product.product_id
+inner join product on list_of_product.product_id = Product.id
+inner join purchase_price on list_of_product.purchase_price_id = purchase_price.id
+
+SELECT * from ArrivalListProduct
+
+

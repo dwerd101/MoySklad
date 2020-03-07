@@ -1,5 +1,9 @@
 package com.moysklad.service.servlets;
 
+import com.moysklad.dao.domain.ArrivalProductDaoImpl;
+import com.moysklad.model.ArrivalOrSaleOfProduct;
+import com.moysklad.view.ArrivalProductView;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,13 +36,16 @@ public class WindowServlet extends HttpServlet {
 
         String requestPath = request.getRequestURI();
         switch (requestPath) {
-            case "/window/receipt":
-                request.getServletContext().getRequestDispatcher("/view/jsp/test.jsp").forward(request, response);
-                break;
             case "/window/":
                 doGet(request, response);
                 break;
-            case  "/window/receipt/view_all_documents":
+            case "/window/arrival":
+                request.getServletContext().getRequestDispatcher("/view/jsp/arrival.jsp").forward(request, response);
+                break;
+            case  "/window/arrival/view_all_document":
+                List<ArrivalProductView> products = new ArrivalProductView().findAllView();
+                request.setAttribute("ArrivalProduct", products);
+                request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalViewDocument.jsp").forward(request,response);
                 break;
         }
     }

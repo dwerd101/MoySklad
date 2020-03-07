@@ -19,7 +19,7 @@
     </div>
     <center>
 <%--        Тестирование --%>
-        <form action="${pageContext.request.contextPath}/window/receipt" method="post" >
+        <form action="${pageContext.request.contextPath}/window/arrival" method="post" >
             <input type="submit" value="Поступление"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"   />
         </form>
         <form action="" method="post">
