@@ -49,6 +49,14 @@ public class WindowServlet extends HttpServlet {
                 request.setAttribute("ArrivalProduct", arrivalProducts);
                 request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalViewDocument.jsp").forward(request,response);
                 break;
+                case"/window/arrival/view_all_documents":
+
+                    break;
+                    case "/window/arrival/send":
+                        
+
+            case "/window/arrival/sent_document":
+                request.getServletContext().getRequestDispatcher("view/jsp/DbArrivalSent.jsp").forward(request,response);
             case "/window/sale":
                 request.getServletContext().getRequestDispatcher("/view/jsp/sale.jsp").forward(request,response);
                 break;
