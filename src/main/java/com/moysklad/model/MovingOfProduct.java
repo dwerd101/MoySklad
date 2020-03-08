@@ -1,8 +1,17 @@
 package com.moysklad.model;
 
 
- public class MovingOfProduct {
-    private int numberId, warehouseAId,warehouseBId, listOfProductId;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class MovingOfProduct {
+     @JsonProperty("number_id")
+     private int numberId;
+     @JsonProperty("warehousea_id")
+     private int warehouseAId;
+     @JsonProperty("warehouseb_id")
+     private int warehouseBId;
+     @JsonProperty("list_of_product_id")
+     private int listOfProductId;
 
      public int getNumberId() {
          return numberId;

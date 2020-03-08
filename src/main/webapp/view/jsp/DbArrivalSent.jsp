@@ -25,7 +25,7 @@
                 <th style="color: white; text-align: center">Номер Склада ID</th>
                 <th style="color: white; text-align: center" >Список Товаров ID</th>
             </tr>
-            <c:forEach items="${ArrivalProduct}" var="product">
+            <c:forEach items="${sentArrivalProduct}" var="product">
                 <tr>
                     <td style="color: white; text-align: center" >${product.numberId}</td>
                     <td style="color: white; text-align: center">${product.warehouseId}</td>

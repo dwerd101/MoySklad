@@ -8,7 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.moysklad.model.ArrivalOrSaleOfProduct" %>
-<%@ page import="com.moysklad.view.ArrivalProductView" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,7 +25,7 @@
                 <th style="color: white; text-align: center">Номер Склада ID</th>
                 <th style="color: white; text-align: center" >Список Товаров ID</th>
             </tr>
-            <c:forEach items="${ArrivalProduct}" var="product">
+            <c:forEach items="${sentArrivalProduct}" var="product">
                 <tr>
                     <td style="color: white; text-align: center" >${product.numberId}</td>
                     <td style="color: white; text-align: center">${product.warehouseId}</td>

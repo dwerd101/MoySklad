@@ -1,7 +1,9 @@
 package com.moysklad.service.servlets;
 
 import com.moysklad.dao.domain.ArrivalProductDaoImpl;
+import com.moysklad.dao.domain.DocumentsDao;
 import com.moysklad.model.ArrivalOrSaleOfProduct;
+import com.moysklad.service.json.Converter;
 import com.moysklad.view.ArrivalProductView;
 import com.moysklad.view.MovingProductView;
 import com.moysklad.view.SaleProductView;
@@ -20,12 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@WebServlet("/window/*")
+@WebServlet(name = "MainWindowServlet", urlPatterns = { "/window/*" }, loadOnStartup = 1)
 @MultipartConfig
 public class WindowServlet extends HttpServlet {
 
 
     private static final String UPLOAD_DIR = "uploads";
+    private static final String JSON = "json";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
@@ -50,10 +53,20 @@ public class WindowServlet extends HttpServlet {
                 request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalViewDocument.jsp").forward(request,response);
                 break;
                 case"/window/arrival/view_all_documents":
-
+                    addFilesOnServer(request,response);
+                    List<ArrivalOrSaleOfProduct> sentArrivalProduct = Converter.toJavaObjectList();
+                    if(sentArrivalProduct.isEmpty()) {
+                        //Изменить реализацию ошибки, если файл был другой.
+                        response.setStatus(HttpServletResponse.SC_CONFLICT);
+                    }
+                    else {
+                        request.setAttribute("sentArrivalProduct", sentArrivalProduct);
+                        request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalSent.jsp").forward(request, response);
+                    }
                     break;
                     case "/window/arrival/send":
-                        
+                        break;
+
 
             case "/window/arrival/sent_document":
                 request.getServletContext().getRequestDispatcher("view/jsp/DbArrivalSent.jsp").forward(request,response);
@@ -80,13 +93,12 @@ public class WindowServlet extends HttpServlet {
     private void addFilesOnServer(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String applicationPath = request.getServletContext().getRealPath("");
         // создает путь к каталогу для сохранения загруженного файла
-        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
+        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR + File.separator + JSON ;
         // Создает папку, если она не создана
         File uploadFolder = new File(uploadFilePath);
         if (!uploadFolder.exists()) {
             uploadFolder.mkdirs();
         }
-
         // Пишет все файлы в загруженную папку
         for (Part part : request.getParts()) {
             if (part != null && part.getSize() > 0) {
@@ -94,13 +106,10 @@ public class WindowServlet extends HttpServlet {
                 String contentType = part.getContentType();
 
                 // Загружать только определенный тип. Тест
-                if (!contentType.equalsIgnoreCase("json")) {
+                if (!contentType.equalsIgnoreCase("application/json")) {
                     continue;
                 }
-
                 part.write(uploadFilePath + File.separator + fileName);
-
-
             }
         }
     }

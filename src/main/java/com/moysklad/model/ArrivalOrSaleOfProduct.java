@@ -1,7 +1,18 @@
 package com.moysklad.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ArrivalOrSaleOfProduct {
-    private int numberId, warehouseId, listOfProductId;
+
+    //Для Jackson'a создан конструктор по умолчанию
+    public ArrivalOrSaleOfProduct() {}
+
+    @JsonProperty("number_id")
+    private int numberId;
+    @JsonProperty("warehouse_id")
+    private int warehouseId;
+    @JsonProperty("list_of_product_id")
+    private int listOfProductId;
 
     public int getNumberId() {
         return numberId;

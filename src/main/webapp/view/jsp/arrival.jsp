@@ -21,8 +21,8 @@
     <center>
 
         <form action="${pageContext.request.contextPath}/window/arrival/view_all_documents" method="post" enctype="multipart/form-data">
-            <input type="file" value="Добавить"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"  multiple="multiple" />
-            <input type="submit" value="Отправить" style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button1" />
+            <input type="file" value="Добавить"  style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button"  multiple="multiple"  name="fileName1" />
+            <input type="submit" value="Отправить" style="text-align: center; margin-top: 1%; padding: 30px 55px;" id="form_button1"/>
         </form>
         <h2><span style="color: #FF0066">&bull;</span>Другие операции<span style="color: #FF0066">&bull;</span></h2>
         <form action="${pageContext.request.contextPath}/window/arrival/view_all_document" method="post">
