@@ -137,13 +137,13 @@ from moving_of_product inner join list_of_product  on moving_of_product.id = lis
                      inner join product on list_of_product.product_id = Product.id;
 
 CREATE view general_list_of_product AS
-    SELECT product.vendor_code AS Артикул, product.product_name as Наименование, purchase_price.price as Цена_закупки, selling_price.price as Цена_продажи
+    SELECT product.vendor_code, product.product_name , purchase_price.price as purchase_price, selling_price.price as selling_price
 FROM list_of_product join Product on list_of_product.product_id = Product.id
 join purchase_price on list_of_product.purchase_price_id = purchase_price.id
 join selling_price on list_of_product.selling_price_id = selling_price.id
 
 CREATE VIEW stock_balances as
-    SELECT  product.vendor_code AS Артикул, product.product_name as Наименование, warehouse.warehouse_id as Склад_ID
+    SELECT  product.vendor_code, product.product_name, Number_of_warehouse.warehouse_name
 from warehouse join Product on warehouse.product_id = Product.id
     join Number_of_warehouse on warehouse.warehouse_id = Number_of_warehouse.id;
 

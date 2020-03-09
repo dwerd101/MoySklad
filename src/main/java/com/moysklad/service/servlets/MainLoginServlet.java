@@ -53,15 +53,15 @@ public class MainLoginServlet extends HttpServlet {
                     resp.addCookie(cookie);
                     resp.sendRedirect(req.getContextPath()+"/window/");
                 } else {
-                    req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+                    req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
                 }
             } else if (countCookie == 0 && session.getAttribute("userAccount") != null) {
                 HttpSession session = req.getSession();
                 session.removeAttribute("userAccount");
-                req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
-            } else req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+                req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
+            } else req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
         } catch (NullPointerException e) {
-            req.getServletContext().getRequestDispatcher("/view/jsp/login.jsp").forward(req, resp);
+            req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
         }
     }
 }

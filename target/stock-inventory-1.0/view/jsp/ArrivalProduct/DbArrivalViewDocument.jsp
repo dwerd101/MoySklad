@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.moysklad.model.ArrivalOrSaleOfProduct" %>
-<%@ page import="com.moysklad.view.ArrivalProductView" %>
+<%@ page import="com.moysklad.view.ArrivalProductViewImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
