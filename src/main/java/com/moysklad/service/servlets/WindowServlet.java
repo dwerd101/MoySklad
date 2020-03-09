@@ -11,6 +11,7 @@ import com.moysklad.view.SaleProductView;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +27,11 @@ import javax.servlet.http.Part;
 @MultipartConfig
 public class WindowServlet extends HttpServlet {
 
-
+    private List<ArrivalOrSaleOfProduct> arrivalOrSaleOfProducts;
+    private List<MovingProductView> movingProductViews;
     private static final String UPLOAD_DIR = "uploads";
     private static final String JSON = "json";
+    private DocumentsDao documents;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
@@ -45,31 +48,38 @@ public class WindowServlet extends HttpServlet {
                 doGet(request, response);
                 break;
             case "/window/arrival":
-                request.getServletContext().getRequestDispatcher("/view/jsp/arrival.jsp").forward(request, response);
+                arrivalOrSaleOfProducts = null;
+                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/arrivalMenu.jsp").forward(request, response);
                 break;
             case  "/window/arrival/view_all_document":
                 List<ArrivalProductView> arrivalProducts = new ArrivalProductView().findAllView();
                 request.setAttribute("ArrivalProduct", arrivalProducts);
-                request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalViewDocument.jsp").forward(request,response);
+                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalViewDocument.jsp").forward(request,response);
                 break;
                 case"/window/arrival/view_all_documents":
                     addFilesOnServer(request,response);
-                    List<ArrivalOrSaleOfProduct> sentArrivalProduct = Converter.toJavaObjectList();
-                    if(sentArrivalProduct.isEmpty()) {
+                    arrivalOrSaleOfProducts = Converter.toJavaObjectList();
+                    if(arrivalOrSaleOfProducts.isEmpty()) {
                         //Изменить реализацию ошибки, если файл был другой.
                         response.setStatus(HttpServletResponse.SC_CONFLICT);
                     }
                     else {
-                        request.setAttribute("sentArrivalProduct", sentArrivalProduct);
-                        request.getServletContext().getRequestDispatcher("/view/jsp/DbArrivalSent.jsp").forward(request, response);
+                        request.setAttribute("sentArrivalProduct", arrivalOrSaleOfProducts);
+                        request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSent.jsp").forward(request, response);
                     }
                     break;
                     case "/window/arrival/send":
+                        documents = new ArrivalProductDaoImpl();
+                        for (ArrivalOrSaleOfProduct product: arrivalOrSaleOfProducts) {
+                            documents.save(product);
+                        }
+
+                        request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSentSuccess.jsp").forward(request,response);
                         break;
 
 
             case "/window/arrival/sent_document":
-                request.getServletContext().getRequestDispatcher("view/jsp/DbArrivalSent.jsp").forward(request,response);
+                request.getServletContext().getRequestDispatcher("view/jsp/ArrivalProduct/DbArrivalSent.jsp").forward(request,response);
             case "/window/sale":
                 request.getServletContext().getRequestDispatcher("/view/jsp/sale.jsp").forward(request,response);
                 break;

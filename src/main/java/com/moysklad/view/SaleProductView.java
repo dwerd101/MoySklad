@@ -15,7 +15,7 @@ public class SaleProductView implements View<SaleProductView> {
     Connection connection;
 
     //language=sql
-    private final String SQL_SELECT_ALL_VIEW = "SELECT * from salelistproduct";
+    private final String SQL_SELECT_ALL_VIEW = "SELECT * from sale_list_product";
 
     private int numberId, warehouseId, listOfProductId, productId, quantity, price;
     private String productName;

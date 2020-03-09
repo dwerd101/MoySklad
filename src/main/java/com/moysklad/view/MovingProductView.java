@@ -16,7 +16,7 @@ public class MovingProductView implements View<MovingProductView> {
     private int numberId, warehouseAId, warehouseBId, listOfProductId, productId, quantity;
     private String productName;
     //language=sql
-    private final String SQL_SELECT_ALL_VIEW = "SELECT * from movinglistproduct";
+    private final String SQL_SELECT_ALL_VIEW = "SELECT * from moving_list_product";
 
     public MovingProductView() {
     }

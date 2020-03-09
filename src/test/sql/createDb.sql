@@ -117,21 +117,33 @@ insert into moving_of_product(number_id, warehouseA_id, warehouseB_id, list_of_p
 /*Тест*/ 
 select product_name as product_id, quantity, purchase_price_id, purchase_price_id, selling_price_id from list_of_product inner join Product P on list_of_product.product_id = P.id;
 SELECT warehouse.id, product_name, product_id, quantity FROM warehouse inner join Product on warehouse.product_id = Product.id and last_purchase_price>500;
-CREATE VIEW ArrivalListProduct AS
+
+CREATE VIEW arrival_list_product AS
 SELECT arrival_of_product.number_id, arrival_of_product.warehouse_id, arrival_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity, purchase_price.price
-from arrival_of_product inner join list_of_product  on arrival_of_product.id = list_of_product.product_id
-inner join product on list_of_product.product_id = Product.id
-inner join purchase_price on list_of_product.purchase_price_id = purchase_price.id;
+from arrival_of_product left join list_of_product  on arrival_of_product.list_of_product_id = list_of_product.id
+left join product on list_of_product.product_id = Product.id
+left join purchase_price on list_of_product.purchase_price_id = purchase_price.id;
 
-SELECT * from ArrivalListProduct;
 
-CREATE VIEW SaleListProduct AS
+CREATE VIEW sale_list_product AS
 SELECT sale_of_product.number_id, sale_of_product.warehouse_id, sale_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity, selling_price.price
-from sale_of_product inner join list_of_product  on sale_of_product.id = list_of_product.product_id
+from sale_of_product inner join list_of_product  on sale_of_product.id = list_of_product.id
                         inner join product on list_of_product.product_id = Product.id
                         inner join Selling_price on list_of_product.purchase_price_id = Selling_price.id;
 
-CREATE view MovingListProduct AS
+CREATE view moving_list_product AS
 SELECT moving_of_product.number_id, moving_of_product.warehousea_id, moving_of_product.warehouseb_id, moving_of_product.list_of_product_id, product.product_name , list_of_product.product_id, list_of_product.quantity
-from moving_of_product inner join list_of_product  on moving_of_product.id = list_of_product.product_id
+from moving_of_product inner join list_of_product  on moving_of_product.id = list_of_product.id
                      inner join product on list_of_product.product_id = Product.id;
+
+CREATE view general_list_of_product AS
+    SELECT product.vendor_code AS Артикул, product.product_name as Наименование, purchase_price.price as Цена_закупки, selling_price.price as Цена_продажи
+FROM list_of_product join Product on list_of_product.product_id = Product.id
+join purchase_price on list_of_product.purchase_price_id = purchase_price.id
+join selling_price on list_of_product.selling_price_id = selling_price.id
+
+CREATE VIEW stock_balances as
+    SELECT  product.vendor_code AS Артикул, product.product_name as Наименование, warehouse.warehouse_id as Склад_ID
+from warehouse join Product on warehouse.product_id = Product.id
+    join Number_of_warehouse on warehouse.warehouse_id = Number_of_warehouse.id;
+

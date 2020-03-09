@@ -18,12 +18,14 @@ public class Converter {
 
         List<ArrivalOrSaleOfProduct>jsonToObjectList = new ArrayList<>();
         File dir = new File(baseFile);
-// File.Delete();
         for (File file: dir.listFiles()
              ) {
             ObjectMapper mapper = new ObjectMapper();
             ArrivalOrSaleOfProduct jsonToObject = mapper.readValue(file, ArrivalOrSaleOfProduct.class);
             jsonToObjectList.add(jsonToObject);
+            if(file.delete()) {
+                System.out.println("Успешно");
+            }
         }
         return  jsonToObjectList;
     }

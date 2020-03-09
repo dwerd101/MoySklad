@@ -14,7 +14,7 @@ public class ArrivalProductView implements View<ArrivalProductView>{
     Connection connection;
 
     //language=sql
-    private final String SQL_SELECT_ALL_VIEW = "SELECT * from ArrivalListProduct";
+    private final String SQL_SELECT_ALL_VIEW = "SELECT * from arrival_list_product";
 
     private int numberId, warehouseId, listOfProductId, productId, quantity, price;
     private String productName;
