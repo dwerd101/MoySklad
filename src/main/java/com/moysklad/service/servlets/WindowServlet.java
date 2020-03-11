@@ -1,18 +1,17 @@
 package com.moysklad.service.servlets;
 
 import com.moysklad.dao.domain.ArrivalProductDaoImpl;
-import com.moysklad.dao.domain.DocumentsDao;
-import com.moysklad.model.ArrivalOrSaleOfProduct;
+import com.moysklad.dao.domain.documentsDao.DocumentsArrivalDao;
+import com.moysklad.model.ArrivalOfProduct;
+import com.moysklad.model.interfaceModel.Model;
+import com.moysklad.service.folder.Folder;
 import com.moysklad.service.json.Converter;
-import com.moysklad.view.ArrivalProductViewImpl;
-import com.moysklad.view.GeneralListOfProductViewImpl;
-import com.moysklad.view.MovingProductViewImpl;
-import com.moysklad.view.SaleProductViewImpl;
+import com.moysklad.service.zip.ZipArchive;
+import com.moysklad.view.*;
+import com.moysklad.view.interfaceView.View;
 
 import java.io.*;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
@@ -27,18 +26,21 @@ import javax.servlet.http.Part;
 public class WindowServlet extends HttpServlet {
 
     public static final String FILE_SEPARATOR = System.getProperty("file.separator");
-    private List<ArrivalOrSaleOfProduct> arrivalOrSaleOfProducts;
+    private List<Model> productList;
     private List<MovingProductViewImpl> movingProductViewImpls;
-    private List<GeneralListOfProductViewImpl> generalListOfProductViewImpl;
+    private List<View> reports;
+    private List<View> viewDoc;
 
     private static final String UPLOAD_DIR = "uploads";
     private static final String DOWNLOAD_DIR = "downloads";
     private static final String JSON = "json";
-    private DocumentsDao documents;
+    private DocumentsArrivalDao arrivalDocumentsDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
-        req.getServletContext().getRequestDispatcher("/view/jsp/Window.jsp").forward(req, response);
+
+
+            req.getServletContext().getRequestDispatcher("/view/html/Window.html").forward(req, response);
 
     }
 
@@ -51,89 +53,165 @@ public class WindowServlet extends HttpServlet {
                 doGet(request, response);
                 break;
             case "/window/arrival":
-                arrivalOrSaleOfProducts = null;
-                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/ArrivalMenu.jsp").forward(request, response);
+                modelMenu(productList, request, response, requestPath);
                 break;
-            case "/window/arrival/view_all_document":
-                List<ArrivalProductViewImpl> arrivalProducts = new ArrivalProductViewImpl().findAllView();
-                request.setAttribute("ArrivalProduct", arrivalProducts);
-                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalViewDocument.jsp").forward(request, response);
+            case "/window/arrival/view_document":
+                viewDocument(viewDoc, request, response, requestPath);
                 break;
             case "/window/arrival/view_all_documents":
-                addFilesOnServer(request, response);
-                arrivalOrSaleOfProducts = Converter.toJavaObjectList();
-                if (arrivalOrSaleOfProducts.isEmpty()) {
-                    //Изменить реализацию ошибки, если файл был другой.
-                    response.setStatus(HttpServletResponse.SC_CONFLICT);
-                } else {
-                    request.setAttribute("sentArrivalProduct", arrivalOrSaleOfProducts);
-                    request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSent.jsp").forward(request, response);
-                }
+                viewAllDocuments(productList,request,response,requestPath);
                 break;
             case "/window/arrival/send":
-                documents = new ArrivalProductDaoImpl();
-                for (ArrivalOrSaleOfProduct product : arrivalOrSaleOfProducts) {
-                    documents.save(product);
-                }
-                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSentSuccess.jsp").forward(request, response);
+                sendJsonToDataBase(request, response, requestPath);
                 break;
-            case "/window/arrival/sent_document":
-                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSent.jsp").forward(request, response);
+            case "/window/arrival/send_document":
+               sentDocument(request,response, requestPath);
+                case "/window/arrival/send/report_general_list_of_product":
+                    String name = request.getParameter("productName");
 
-            case "/window/arrival/report_general_list_of_product_success":
+                   // request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
+                    if(name.isEmpty()) {
+                        reports = new GeneralListOfProductViewImpl().findAllView();
+                        request.setAttribute("reports", reports);
+                        downloadFileFromServer(request, response, reports);
+                      //  request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DB.jsp").forward(request, response);
+                      //  downloadFileFromServer(request, response, reports);
 
+                      //  response.sendRedirect(request.getContextPath()+"/arrival/send");
+                       // request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ReportSucces.html").forward(request, response);
+                    }
+                    else {
+                        reports = new GeneralListOfProductViewImpl().findByName(name);
+                        if(reports.size()==0) {
+                            request.setAttribute("reports", reports);
+                            downloadFileFromServer(request, response, reports);
+                            ///Должные вставить метод в
+                            request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ErrorListProduct.html").forward(request, response);
 
-                String productName = request.getParameter("productName");
-                if (!productName.isEmpty()) {
-                    generalListOfProductViewImpl = new GeneralListOfProductViewImpl().findByName(productName);
-                    Converter.toJsonListOfProduct(generalListOfProductViewImpl);
-                    downloadFileFromServer(request,response, generalListOfProductViewImpl);
+                        }
+                        else if(reports.size()>0) {
+                            Converter.toJsonListOfProduct(reports);
+                            request.setAttribute("reports", reports);
+                            downloadFileFromServer(request, response, reports);
+                          //  request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DB.jsp").forward(request, response);
 
-                } else {
-                     generalListOfProductViewImpl = new GeneralListOfProductViewImpl().findAllView();
-                   //  Converter.toJsonListOfProduct(generalListOfProductViewImpl);
-                     downloadFileFromServer(request,response, generalListOfProductViewImpl);
-                 //    request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/SuccessReport.jsp").forward(request,response);
-                }
+                          //  response.sendRedirect(request.getContextPath()+"/window/arrival/send");
+                        //    request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DB.jsp").forward(request, response);
+                            //request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ReportSuccess.html").forward(request, response);
+
+                        }
+                       // request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DB.jsp").forward(request, response);
+
+                    }
+                   // request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DB.jsp");
+
+                    break;
+            case "/window/arrival/send/report_general_list_of_product/error":
+                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
+
+                break;
+            case "window/arrival/report_general_list_of_product_parameter_success":
+            case "window/arrival/report_general_list_of_product_parameter_fail":
                 break;
 
             case "/window/sale":
-                request.getServletContext().getRequestDispatcher("/view/jsp/Sale.jsp").forward(request, response);
+              //  request.getServletContext().getRequestDispatcher("/view/html/Sale.html").forward(request, response);
                 break;
             case "/window/sale/view_all_document":
-                List<SaleProductViewImpl> saleProducts = new SaleProductViewImpl().findAllView();
+                List<View> saleProducts = new SaleProductViewImpl().findAllView();
                 request.setAttribute("SaleProduct", saleProducts);
-                request.getServletContext().getRequestDispatcher("/view/jsp/DbSaleViewDocument.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/view/jsp/SaleProduct/DbSaleViewDocument.jsp").forward(request, response);
                 break;
             case "/window/moving":
-                request.getServletContext().getRequestDispatcher("/view/jsp/Moving.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/view/html/Moving.html").forward(request, response);
                 break;
             case "/window/moving/view_all_document":
-                List<MovingProductViewImpl> movingProducts = new MovingProductViewImpl().findAllView();
+                List<View> movingProducts = new MovingProductViewImpl().findAllView();
                 request.setAttribute("MovingProduct", movingProducts);
-                request.getServletContext().getRequestDispatcher("/view/jsp/DbMovingViewDocument.jsp").forward(request, response);
+                request.getServletContext().getRequestDispatcher("/view/jsp//MovingProduct/DbMovingViewDocument.jsp").forward(request, response);
                 break;
         }
     }
 
 
+
+
+
+    private void modelMenu(List<Model> productList, HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+        productList = null;
+        switch (requestPath) {
+            case "/window/arrival":
+                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalMenu.html").forward(request, response);
+                break;
+
+        }
+    }
+
+    private void viewDocument(List<View> viewDoc, HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+        switch (requestPath) {
+            case "/window/arrival/view_document":
+                viewDoc = new ArrivalProductViewImpl().findAllView();
+                request.setAttribute("ArrivalProduct", viewDoc);
+                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalViewDocument.jsp").forward(request, response);
+                break;
+        }
+    }
+
+    private void viewAllDocuments(List<Model> productList, HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+
+        switch (requestPath) {
+            case "/window/arrival/view_all_documents":
+            addFilesOnServer(request, response);
+            this.productList = Converter.toJavaObjectList(requestPath);
+            if (this.productList == null) {
+                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalMenuError.html").forward(request, response);
+            } else if ( this.productList.isEmpty()) {
+                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalMenuError.html").forward(request, response);
+            } else {
+                request.setAttribute("sentArrivalProduct",  this.productList);
+                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSend.jsp").forward(request, response);
+            }
+            break;
+        }
+    }
+
+    private void sendJsonToDataBase(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+
+        switch (requestPath) {
+            case "/window/arrival/send":
+                arrivalDocumentsDao = new ArrivalProductDaoImpl();
+                for (Model product : productList) {
+                    arrivalDocumentsDao.save((ArrivalOfProduct) product);
+                }
+                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
+              //  response.sendRedirect(requestPath+"/report_general_list_of_product");
+               // request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DB.jsp").forward(request, response);
+                break;
+        }
+    }
+
+    private void sentDocument(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+        switch (requestPath) {
+            case "/window/arrival/send_document":
+                request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSend.jsp").forward(request, response);
+                break;
+        }
+    }
+
+    private void getReports(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+
+
+    }
+
     private void addFilesOnServer(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String applicationPath = request.getServletContext().getRealPath("");
-        // создает путь к каталогу для сохранения загруженного файла
-        // Не забудь добавтьь для товара и склад CRUD
-        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR + File.separator + JSON;
-        // Создает папку, если она не создана
-        File uploadFolder = new File(uploadFilePath);
-        if (!uploadFolder.exists()) {
-            uploadFolder.mkdirs();
-        }
-        // Пишет все файлы в загруженную папку
+        Folder folder = new Folder();
+        folder.createFolder(applicationPath, UPLOAD_DIR, JSON);
+        String uploadFilePath = folder.getFolderString(applicationPath, UPLOAD_DIR, JSON);
         for (Part part : request.getParts()) {
             if (part != null && part.getSize() > 0) {
                 String fileName = part.getSubmittedFileName();
                 String contentType = part.getContentType();
-
-                // Загружать только определенный тип. Тест
                 if (!contentType.equalsIgnoreCase("application/json")) {
                     continue;
                 }
@@ -142,70 +220,25 @@ public class WindowServlet extends HttpServlet {
         }
     }
 
-    private void downloadFileFromServer(HttpServletRequest request, HttpServletResponse response, List<GeneralListOfProductViewImpl> list ) throws IOException, ServletException {
-
-
-
-        String requestPath = request.getRequestURI();
-        switch (requestPath) {
-            case "/window/arrival/report_general_list_of_product_success":
-
-                response.setContentType("application/json");
-                String applicationPath = request.getServletContext().getRealPath("");
-                String downloadFilePath = applicationPath + File.separator + DOWNLOAD_DIR + File.separator + JSON + File.separator;
-
-                File downloadFolder = new File(downloadFilePath);
-                if (!downloadFolder.exists()) {
-                    downloadFolder.mkdirs();
-                }
-                Converter.toJsonListOfProduct(list);
-                String filepath = downloadFilePath;
-
-                File dir = new File(filepath);
-                String[] files = dir.list();
-                if (files != null && files.length > 0) {
-
-                    byte[] zip = zipFiles(dir, files);
-
-                    ServletOutputStream sos = response.getOutputStream();
-                    response.setContentType("application/zip");
-                    response.setHeader("Content-Disposition", "attachment; filename=report.zip");
-
-                    sos.write(zip);
-                    sos.flush();
-                    break;
-                }
-
+    private void downloadFileFromServer(HttpServletRequest request, HttpServletResponse response, List<View> productList) throws IOException, ServletException {
+        response.setContentType("application/json");
+        String applicationPath = request.getServletContext().getRealPath("");
+        Folder folder = new Folder();
+        folder.createFolder(applicationPath, DOWNLOAD_DIR, JSON);
+        folder.deleteListFolder(applicationPath, DOWNLOAD_DIR, JSON);
+        Converter.toJsonListOfProduct(productList);
+        String[] files = folder.getFilesInDir(applicationPath, DOWNLOAD_DIR, JSON);
+        File dir = folder.getFolder(applicationPath, DOWNLOAD_DIR, JSON);
+        if (files != null && files.length > 0) {
+            byte[] zip = new ZipArchive().zipFiles(dir, files);
+            ServletOutputStream sos = response.getOutputStream();
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", "attachment; filename=report.zip");
+            sos.write(zip);
+            sos.flush();
         }
+
+      ///  response.sendRedirect(request.getContextPath()+"/window/");
     }
-
-    private byte[] zipFiles(File directory, String[] files) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ZipOutputStream zos = new ZipOutputStream(baos);
-        byte bytes[] = new byte[2048];
-
-        for (String fileName : files) {
-            FileInputStream fis = new FileInputStream(directory.getPath() +
-                    WindowServlet.FILE_SEPARATOR + fileName);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-
-            zos.putNextEntry(new ZipEntry(fileName));
-
-            int bytesRead;
-            while ((bytesRead = bis.read(bytes)) != -1) {
-                zos.write(bytes, 0, bytesRead);
-            }
-            zos.closeEntry();
-            bis.close();
-            fis.close();
-        }
-        zos.flush();
-        baos.flush();
-        zos.close();
-        baos.close();
-
-        return baos.toByteArray();
-    }
-
 }
 

@@ -1,6 +1,7 @@
 package com.moysklad.dao.domain;
 
 
+import com.moysklad.dao.domain.documentsDao.MovingOfProductDao;
 import com.moysklad.model.MovingOfProduct;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 

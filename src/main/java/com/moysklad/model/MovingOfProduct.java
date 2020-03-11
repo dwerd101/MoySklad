@@ -2,8 +2,9 @@ package com.moysklad.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.moysklad.model.interfaceModel.Model;
 
-public class MovingOfProduct {
+public class MovingOfProduct implements Model {
      @JsonProperty("number_id")
      private int numberId;
      @JsonProperty("warehousea_id")

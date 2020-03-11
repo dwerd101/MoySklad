@@ -79,6 +79,14 @@ h2 {
     text-align: center;
     text-transform: uppercase;
 }
+h3 {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 7px;
+    text-align: center;
+    text-transform: uppercase;
+}
 .underline {
     border-bottom: solid 2px  #FF0066;
     margin: -0.512em auto;

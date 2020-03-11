@@ -1,5 +1,8 @@
 package com.moysklad.model;
-public class UserAccount {
+
+import com.moysklad.model.interfaceModel.Model;
+
+public class UserAccount implements Model {
     private String name, password;
 
     public UserAccount(String name, String password) {

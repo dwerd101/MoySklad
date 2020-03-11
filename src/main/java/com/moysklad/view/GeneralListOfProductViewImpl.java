@@ -2,12 +2,13 @@ package com.moysklad.view;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
+import com.moysklad.view.interfaceView.View;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneralListOfProductViewImpl implements View<GeneralListOfProductViewImpl> {
+public class GeneralListOfProductViewImpl implements View {
 
     Connection connection;
     //language=sql
@@ -35,9 +36,9 @@ public class GeneralListOfProductViewImpl implements View<GeneralListOfProductVi
     }
 
     @Override
-    public List<GeneralListOfProductViewImpl> findAllView() {
+    public List<View> findAllView() {
         try {
-            List<GeneralListOfProductViewImpl> products = new ArrayList<>();
+            List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL_VIEW);
@@ -57,9 +58,9 @@ public class GeneralListOfProductViewImpl implements View<GeneralListOfProductVi
     }
 
 
-    public List<GeneralListOfProductViewImpl> findByName(String name) {
+    public List<View> findByName(String name) {
         try {
-            List<GeneralListOfProductViewImpl> products = findAllView();
+            List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_VIEW_BY_NAME);
             statement.setString(1, name);

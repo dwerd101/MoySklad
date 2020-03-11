@@ -1,6 +1,7 @@
 package com.moysklad.dao.domain;
 
 
+import com.moysklad.dao.domain.documentsDao.UserAccountDao;
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import com.moysklad.service.crypt.CryptPasswordImpl;

@@ -1,12 +1,13 @@
 package com.moysklad.view;
 
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
+import com.moysklad.view.interfaceView.View;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockBalancesViewImpl implements View<StockBalancesViewImpl> {
+public class StockBalancesViewImpl implements View {
 
     Connection connection;
 
@@ -28,10 +29,10 @@ public class StockBalancesViewImpl implements View<StockBalancesViewImpl> {
     }
 
     @Override
-    public List<StockBalancesViewImpl> findAllView() {
+    public List<View> findAllView() {
 
         try {
-            List<StockBalancesViewImpl> products = new ArrayList<>();
+            List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL_VIEW);
@@ -50,9 +51,9 @@ public class StockBalancesViewImpl implements View<StockBalancesViewImpl> {
         return null;
     }
 
-    public List<StockBalancesViewImpl> findByName(GeneralListOfProductViewImpl model, String name) {
+    public List<View> findByName(GeneralListOfProductViewImpl model, String name) {
         try {
-            List<StockBalancesViewImpl> products = findAllView();
+            List<View> products = findAllView();
             connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_VIEW_BY_ID);
             statement.setString(1, name);

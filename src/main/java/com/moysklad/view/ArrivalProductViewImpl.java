@@ -1,6 +1,7 @@
 package com.moysklad.view;
 
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
+import com.moysklad.view.interfaceView.View;
 import lombok.Getter;
 
 import java.sql.Connection;
@@ -10,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 @Getter
-public class ArrivalProductViewImpl implements View<ArrivalProductViewImpl>{
+public class ArrivalProductViewImpl implements View {
     Connection connection;
 
     //language=sql
@@ -30,9 +31,9 @@ public class ArrivalProductViewImpl implements View<ArrivalProductViewImpl>{
     }
 
     @Override
-    public List<ArrivalProductViewImpl> findAllView() {
+    public List<View> findAllView() {
         try {
-            List<ArrivalProductViewImpl> products = new ArrayList<>();
+            List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL_VIEW);

@@ -1,16 +1,12 @@
 package com.moysklad.service.servlets;
 
-import com.moysklad.dao.CrudDao;
-import com.moysklad.dao.domain.UserAccountDao;
+import com.moysklad.dao.domain.documentsDao.UserAccountDao;
 import com.moysklad.dao.domain.UserCrudDaoImpl;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet(name = "Home", value = "")
 public class MainLoginServlet extends HttpServlet {
@@ -20,7 +16,9 @@ public class MainLoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        forwardLogin(req, resp);
+        WindowServlet windowServlet = new WindowServlet();
+        windowServlet.doGet(req,resp);
+       // forwardLogin(req, resp);
     }
 
     @Override
@@ -53,15 +51,15 @@ public class MainLoginServlet extends HttpServlet {
                     resp.addCookie(cookie);
                     resp.sendRedirect(req.getContextPath()+"/window/");
                 } else {
-                    req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
+                    req.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(req, resp);
                 }
             } else if (countCookie == 0 && session.getAttribute("userAccount") != null) {
                 HttpSession session = req.getSession();
                 session.removeAttribute("userAccount");
-                req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
-            } else req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
+                req.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(req, resp);
+            } else req.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(req, resp);
         } catch (NullPointerException e) {
-            req.getServletContext().getRequestDispatcher("/view/jsp/Login.jsp").forward(req, resp);
+            req.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(req, resp);
         }
     }
 }
