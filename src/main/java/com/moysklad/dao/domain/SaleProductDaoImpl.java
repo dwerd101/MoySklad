@@ -18,6 +18,8 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
     //language=sql
     private final String SQL_UPDATE_PRODUCT = "UPDATE sale_of_product SET number_id=?, warehouse_id = ?, list_of_product_id= ? WHERE id = ?";
 
+    private boolean checkException = false;
+
     private static class SingletonHelper {
         private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
     }
@@ -32,6 +34,7 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
             preparedStatementSaleOfProduct(preparedStatement,model);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
@@ -45,6 +48,7 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
             preparedStatement.setInt(4, id);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
@@ -57,6 +61,7 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
 
@@ -80,6 +85,7 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
             }
             return products;
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
         return null;
@@ -91,7 +97,12 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
             preparedStatement.setInt(2, model.getWarehouseId());
             preparedStatement.setInt(3, model.getListOfProductId());
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
+    }
+    @Override
+    public boolean isCheckException() {
+        return checkException;
     }
 }

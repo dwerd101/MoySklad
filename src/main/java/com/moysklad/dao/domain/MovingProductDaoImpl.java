@@ -1,7 +1,7 @@
 package com.moysklad.dao.domain;
 
 
-import com.moysklad.dao.domain.documentsDao.MovingOfProductDao;
+import com.moysklad.dao.domain.documentsDao.DocumentsMovingDao;
 import com.moysklad.model.MovingOfProduct;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 
@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovingOfProductImpl implements MovingOfProductDao {
+public class MovingProductDaoImpl implements DocumentsMovingDao {
     Connection connection;
     //language=SQL
     private final String SQL_SELECT_ALL = " SELECT * from moving_of_product";
@@ -20,11 +20,11 @@ public class MovingOfProductImpl implements MovingOfProductDao {
     //language=sql
     private final String SQL_UPDATE_PRODUCT = "UPDATE moving_of_product SET number_id=?, warehousea_id = ?, warehouseb_id = ?, list_of_product_id= ? WHERE id = ?";
 
+    private boolean checkException = false;
+
     private static class SingletonHelper {
         private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
     }
-
-
 
     @Override
     public void save(MovingOfProduct model) {
@@ -37,6 +37,7 @@ public class MovingOfProductImpl implements MovingOfProductDao {
             preparedStatement.setInt(4, model.getListOfProductId());
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
@@ -53,6 +54,7 @@ public class MovingOfProductImpl implements MovingOfProductDao {
             preparedStatement.setInt(5, id);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
@@ -65,6 +67,7 @@ public class MovingOfProductImpl implements MovingOfProductDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
 
@@ -89,8 +92,13 @@ public class MovingOfProductImpl implements MovingOfProductDao {
             }
             return products;
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
         return null;
+    }
+    @Override
+    public boolean isCheckException() {
+        return checkException;
     }
 }

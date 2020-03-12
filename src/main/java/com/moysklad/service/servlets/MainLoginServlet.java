@@ -16,9 +16,7 @@ public class MainLoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        WindowServlet windowServlet = new WindowServlet();
-        windowServlet.doGet(req,resp);
-       // forwardLogin(req, resp);
+        forwardLogin(req, resp);
     }
 
     @Override

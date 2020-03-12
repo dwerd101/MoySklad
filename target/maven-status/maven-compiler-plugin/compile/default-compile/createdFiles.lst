@@ -5,7 +5,6 @@ com/moysklad/dao/domain/ArrivalProductDaoImpl.class
 com/moysklad/service/crypt/template/CryptPassword.class
 com/moysklad/dao/domain/UserCrudDaoImpl$SingletonHelper.class
 com/moysklad/view/StockBalancesViewImpl.class
-com/moysklad/dao/domain/MovingOfProductImpl$SingletonHelper.class
 com/moysklad/dao/domain/documentsDao/DocumentsSaleDao.class
 com/moysklad/service/connection/ConnectionDataBaseFactory$SingletonHelper.class
 com/moysklad/view/interfaceView/View.class
@@ -15,7 +14,6 @@ com/moysklad/model/ArrivalOfProduct.class
 com/moysklad/service/servlets/WindowServlet.class
 com/moysklad/model/interfaceModel/Model.class
 com/moysklad/service/crypt/CryptPasswordImpl.class
-com/moysklad/dao/domain/documentsDao/MovingOfProductDao.class
 com/moysklad/service/connection/ConnectionDataBaseFactory.class
 com/moysklad/model/UserAccount.class
 com/moysklad/dao/domain/documentsDao/DocumentsArrivalDao.class
@@ -28,7 +26,6 @@ com/moysklad/dao/domain/SaleProductDaoImpl$SingletonHelper.class
 com/moysklad/service/servlets/MainLoginServlet.class
 com/moysklad/model/Product.class
 com/moysklad/dao/domain/UserCrudDaoImpl.class
-com/moysklad/dao/domain/MovingOfProductImpl.class
 com/moysklad/dao/domain/SaleProductDaoImpl.class
 com/moysklad/dao/domain/ArrivalProductDaoImpl$SingletonHelper.class
 com/moysklad/view/SaleProductViewImpl.class

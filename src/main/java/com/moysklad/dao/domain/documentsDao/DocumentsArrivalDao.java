@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface DocumentsArrivalDao extends CrudDao<ArrivalOfProduct> {
     List<ArrivalOfProduct> findAll();
+    boolean isCheckException();
 }

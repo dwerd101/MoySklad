@@ -22,6 +22,8 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
     //language=sql
     private final String SQL_UPDATE_PRODUCT = "UPDATE arrival_of_product SET number_id=?, warehouse_id = ?, list_of_product_id= ? WHERE id = ?";
 
+    private boolean checkException = false;
+
     private static class SingletonHelper {
         private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
     }
@@ -36,6 +38,7 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
             preparedStatementArrivalOfProduct(preparedStatement, model);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
@@ -50,6 +53,7 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
             preparedStatement.setInt(4, id);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
@@ -62,6 +66,7 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
 
@@ -85,6 +90,7 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
             }
             return products;
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
         return null;
@@ -96,8 +102,12 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
             preparedStatement.setInt(2, model.getWarehouseId());
             preparedStatement.setInt(3, model.getListOfProductId());
         } catch (SQLException e) {
+            checkException = true;
             e.printStackTrace();
         }
     }
-
+    @Override
+    public boolean isCheckException() {
+        return checkException;
+    }
 }

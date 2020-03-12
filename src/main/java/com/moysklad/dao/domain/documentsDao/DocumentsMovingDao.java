@@ -6,6 +6,7 @@ import com.moysklad.model.MovingOfProduct;
 
 import java.util.List;
 
-public interface MovingOfProductDao extends CrudDao<MovingOfProduct> {
+public interface DocumentsMovingDao extends CrudDao<MovingOfProduct> {
     List<MovingOfProduct> findAll();
+    boolean isCheckException();
 }

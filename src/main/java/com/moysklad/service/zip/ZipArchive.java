@@ -8,6 +8,12 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipArchive {
 
+    /**
+     * Упаковывает файлы в архив zip.
+     * @return <code>byte[]</code>
+     * @throws IOException если произошло исключение ввода или вывода. А также
+     * если файл не был найден в директории.
+     */
     public byte[] zipFiles(File directory, String[] files) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ZipOutputStream zos = new ZipOutputStream(baos);

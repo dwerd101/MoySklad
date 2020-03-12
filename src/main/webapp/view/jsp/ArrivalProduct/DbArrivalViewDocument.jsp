@@ -31,7 +31,7 @@
         <th style="color: white; text-align: center" >Кол-во</th>
         <th style="color: white; text-align: center" >Цена</th>
     </tr>
-    <c:forEach items="${ArrivalProduct}" var="product">
+    <c:forEach items="${arrivalProduct}" var="product">
         <tr>
             <td style="color: white; text-align: center" >${product.numberId}</td>
             <td style="color: white; text-align: center">${product.warehouseId}</td>

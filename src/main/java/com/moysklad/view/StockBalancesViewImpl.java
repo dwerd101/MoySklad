@@ -1,5 +1,6 @@
 package com.moysklad.view;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import com.moysklad.view.interfaceView.View;
 
@@ -16,16 +17,19 @@ public class StockBalancesViewImpl implements View {
     //language=sql
     private final String SELECT_ALL_VIEW_BY_ID = "SELECT * FROM stock_balances where warehouse_name = ?";
 
+    @JsonProperty("vendor_code")
     private String vendorCode;
+    @JsonProperty("product_name")
     private String productName;
-    private String warehouse_name;
+    @JsonProperty("warehouse_name")
+    private String warehouseName;
 
     public StockBalancesViewImpl() {}
 
-    public StockBalancesViewImpl(String vendorCode, String productName, String warehouse_name) {
+    public StockBalancesViewImpl(String vendorCode, String productName, String warehouseName) {
         this.vendorCode = vendorCode;
         this.productName = productName;
-        this.warehouse_name = warehouse_name;
+        this.warehouseName = warehouseName;
     }
 
     @Override
@@ -51,9 +55,9 @@ public class StockBalancesViewImpl implements View {
         return null;
     }
 
-    public List<View> findByName(GeneralListOfProductViewImpl model, String name) {
+    public List<View> findByName(String name) {
         try {
-            List<View> products = findAllView();
+            List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_VIEW_BY_ID);
             statement.setString(1, name);

@@ -14,6 +14,8 @@ public class MovingOfProduct implements Model {
      @JsonProperty("list_of_product_id")
      private int listOfProductId;
 
+     public MovingOfProduct() {}
+
      public int getNumberId() {
          return numberId;
      }

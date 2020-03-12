@@ -3,6 +3,8 @@ package com.moysklad.service.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.moysklad.model.ArrivalOfProduct;
+import com.moysklad.model.MovingOfProduct;
+import com.moysklad.model.SaleOfProduct;
 import com.moysklad.model.interfaceModel.Model;
 import com.moysklad.view.interfaceView.View;
 
@@ -24,8 +26,16 @@ public class Converter {
                 ObjectMapper mapper = new ObjectMapper();
                 switch (requestPath) {
                     case "/window/arrival/view_all_documents":
-                        ArrivalOfProduct jsonToObject = mapper.readValue(file, ArrivalOfProduct.class);
-                        jsonToObjectList.add(jsonToObject);
+                        ArrivalOfProduct jsonToObjectArrival = mapper.readValue(file, ArrivalOfProduct.class);
+                        jsonToObjectList.add(jsonToObjectArrival);
+                        break;
+                    case "/window/sale/view_all_documents":
+                        SaleOfProduct jsonToObjectSale = mapper.readValue(file, SaleOfProduct.class);
+                        jsonToObjectList.add(jsonToObjectSale);
+                        break;
+                    case "/window/moving/view_all_documents":
+                        MovingOfProduct jsonToObjectMoving = mapper.readValue(file, MovingOfProduct.class);
+                        jsonToObjectList.add(jsonToObjectMoving);
                         break;
                 }
                 if (file.delete()) {
@@ -47,7 +57,7 @@ public class Converter {
 
     public static void toJsonListOfProduct(List<View> list) {
         try {
-            String name = "generalListOfProduct";
+            String name = "report";
             int count = 0;
             String typeFile = ".json";
 

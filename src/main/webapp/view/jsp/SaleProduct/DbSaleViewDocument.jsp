@@ -30,7 +30,7 @@
                 <th style="color: white; text-align: center" >Кол-во</th>
                 <th style="color: white; text-align: center" >Цена</th>
             </tr>
-            <c:forEach items="${SaleProduct}" var="product">
+            <c:forEach items="${saleProduct}" var="product">
                 <tr>
                     <td style="color: white; text-align: center" >${product.numberId}</td>
                     <td style="color: white; text-align: center">${product.warehouseId}</td>
@@ -44,7 +44,7 @@
         </table>
 
         <center>
-            <form action="${pageContext.request.contextPath}/window/arrival" method="post">
+            <form action="${pageContext.request.contextPath}/window/sale" method="post">
                 <input type="submit" value="Назад" style="text-align: center; margin: -4%; padding: 30px 73px;"  id="form_button2"  />
             </form>
         </center>

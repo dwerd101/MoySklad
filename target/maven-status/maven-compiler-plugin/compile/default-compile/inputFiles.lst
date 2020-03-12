@@ -6,12 +6,13 @@
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/servlets/MainLoginServlet.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/zip/ZipArchive.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/view/SaleProductViewImpl.java
+/Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/documentsDao/DocumentsMovingDao.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/view/interfaceView/View.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/json/Converter.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/model/MovingOfProduct.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/SaleProductDaoImpl.java
-/Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/MovingOfProductImpl.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/model/Product.java
+/Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/servlets/ErrorServlet.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/servlets/WindowServlet.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/ArrivalProductDaoImpl.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/crypt/template/CryptPassword.java
@@ -25,8 +26,8 @@
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/view/StockBalancesViewImpl.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/view/GeneralListOfProductViewImpl.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/documentsDao/DocumentsSaleDao.java
+/Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/MovingProductDaoImpl.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/model/UserAccount.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/view/ArrivalProductViewImpl.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/CrudDao.java
-/Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/dao/domain/documentsDao/MovingOfProductDao.java
 /Users/roman/Desktop/java2/MoySklad/src/main/java/com/moysklad/service/connection/template/ConnectionDataBase.java
