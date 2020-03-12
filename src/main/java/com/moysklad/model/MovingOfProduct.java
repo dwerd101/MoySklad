@@ -13,7 +13,7 @@ public class MovingOfProduct implements Model {
      private int warehouseBId;
      @JsonProperty("list_of_product_id")
      private int listOfProductId;
-
+    //Для Jackson'a создан конструктор по умолчанию
      public MovingOfProduct() {}
 
      public int getNumberId() {

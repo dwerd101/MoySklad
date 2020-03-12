@@ -31,7 +31,7 @@ public class MainFilter implements Filter {
         }
         if (session == null || session.getAttribute("userAccount") == null || count == 0) {
 
-            servletResponse.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            request.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(request, response);
             return;
         }
 

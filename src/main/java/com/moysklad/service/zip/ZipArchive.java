@@ -8,6 +8,10 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipArchive {
 
+
+
+    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
+
     /**
      * Упаковывает файлы в архив zip.
      * @return <code>byte[]</code>
@@ -21,7 +25,7 @@ public class ZipArchive {
 
         for (String fileName : files) {
             FileInputStream fis = new FileInputStream(directory.getPath() +
-                    WindowServlet.FILE_SEPARATOR + fileName);
+                    ZipArchive.getFileSeparator() + fileName);
             BufferedInputStream bis = new BufferedInputStream(fis);
 
             zos.putNextEntry(new ZipEntry(fileName));
@@ -39,5 +43,9 @@ public class ZipArchive {
         zos.close();
         baos.close();
         return baos.toByteArray();
+    }
+
+    public static String getFileSeparator() {
+        return FILE_SEPARATOR;
     }
 }

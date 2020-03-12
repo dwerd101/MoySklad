@@ -10,8 +10,9 @@ import java.io.IOException;
 
 @WebServlet(name = "Home", value = "")
 public class MainLoginServlet extends HttpServlet {
-
+    /** Поле аккаунт пользователя */
     private UserAccountDao userAccount;
+    /** Поле сессии */
     private HttpSession session;
 
     @Override
@@ -24,20 +25,29 @@ public class MainLoginServlet extends HttpServlet {
         forwardLogin(req, resp);
     }
 
+
+    /**
+     * Если пользователь авторизовался, то входит в систему.
+     * Пользователю выдаются куки, для доступа к веб-приложению, если пользователь
+     * удалит куки, то он вернется на стартовую страницую.
+     * Проверка аутентификации пользователя происходит непосредственно с базой данных.
+     * @param req принимает на вход запрос.
+     * @param resp отправляет ответ пользователю.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     */
     private void forwardLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         userAccount = new UserCrudDaoImpl();
         String name = req.getParameter("Login");
         String password = req.getParameter("password");
         Cookie cookie = new Cookie("Login", "yes");
         Cookie[] cookies = req.getCookies();
-        int countCookie = 0;
         if (cookies != null) {
             for (Cookie c : cookies
             ) {
                 if (c.getName().equals("Login") && session!=null) {
                     resp.sendRedirect(req.getContextPath()+"/window/");
-                    countCookie++;
-                return;
+                    return;
             }
             }
         }
@@ -51,7 +61,7 @@ public class MainLoginServlet extends HttpServlet {
                 } else {
                     req.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(req, resp);
                 }
-            } else if (countCookie == 0 && session.getAttribute("userAccount") != null) {
+            } else if (session.getAttribute("userAccount") != null) {
                 HttpSession session = req.getSession();
                 session.removeAttribute("userAccount");
                 req.getServletContext().getRequestDispatcher("/view/html/Login.html").forward(req, resp);

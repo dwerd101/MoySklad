@@ -3,6 +3,7 @@ package com.moysklad.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
+    //Для Jackson'a создан конструктор по умолчанию
     public Product() {}
 
     @JsonProperty("vendor_code")

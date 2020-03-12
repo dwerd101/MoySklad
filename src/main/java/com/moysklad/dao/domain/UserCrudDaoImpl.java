@@ -24,13 +24,7 @@ public class UserCrudDaoImpl implements UserAccountDao {
     //language=sql
     private final String SQL_UPDATE_USER = "UPDATE user_account SET name=?, password = ? WHERE user_account.id = ?";
 
-    private static class SingletonHelper {
-        private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
-    }
 
-    public static UserCrudDaoImpl getInstance() {
-        return SingletonHelper.INSTANCE;
-    }
 
     @Override
     public void save(UserAccount model) {

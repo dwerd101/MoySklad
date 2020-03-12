@@ -14,9 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Converter {
+    /** Поле для загрузки файла/файлов*/
     private final static String baseFile = "../webapps/root/uploads/json/";
+    /** Поле для скачивания файла/файлов*/
     private final static String baseDownloadFile = "../webapps/root/downloads/json" + File.separator;
 
+    /**
+     * Преобразует JSON в Java объект.
+     * Затем удаляет файлы, которые находились по пути {@link Converter#baseFile}.
+     * @param requestPath содержит путь части URL от имени протокола до строки запроса.
+     * @return java объект
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
     public static List<Model> toJavaObjectList(String requestPath) throws IOException {
         List<Model> jsonToObjectList = new ArrayList<>();
         File dir = new File(baseFile);
@@ -55,6 +64,10 @@ public class Converter {
         return null;
     }
 
+    /**
+     * Преобразует объект/объекты java в JSON.
+     * @param list список объектов для класса {@link View}
+     */
     public static void toJsonListOfProduct(List<View> list) {
         try {
             String name = "report";

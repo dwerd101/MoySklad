@@ -5,7 +5,7 @@ import com.moysklad.model.interfaceModel.Model;
 
 public class SaleOfProduct implements Model {
 
-    //Для Jackson'a создан конструктор по умолчанию
+
     public SaleOfProduct() {}
 
     @JsonProperty("number_id")

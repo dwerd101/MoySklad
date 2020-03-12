@@ -24,11 +24,6 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
 
     private boolean checkException = false;
 
-    private static class SingletonHelper {
-        private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
-    }
-
-
 
     @Override
     public void save(ArrivalOfProduct model) {

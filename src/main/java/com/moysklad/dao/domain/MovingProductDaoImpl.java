@@ -22,9 +22,7 @@ public class MovingProductDaoImpl implements DocumentsMovingDao {
 
     private boolean checkException = false;
 
-    private static class SingletonHelper {
-        private static final UserCrudDaoImpl INSTANCE = new UserCrudDaoImpl();
-    }
+
 
     @Override
     public void save(MovingOfProduct model) {

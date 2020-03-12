@@ -11,7 +11,7 @@ public class Warehouse implements Model {
     private int productId;
     @JsonProperty("quantity")
     private int quantity;
-
+    //Для Jackson'a создан конструктор по умолчанию
     public Warehouse(){}
 
     public Warehouse(int warehouseId, int productId, int quantity) {

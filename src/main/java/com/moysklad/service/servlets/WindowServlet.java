@@ -31,17 +31,24 @@ import javax.servlet.http.Part;
 @MultipartConfig
 public class WindowServlet extends HttpServlet {
 
-    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+
+    /** Поле список товаров */
     private List<Model> productList;
+    /** Поле отчеты */
     private List<View> reports;
 
-
+    /** Поле загрузки для создание директории */
     private static final String UPLOAD_DIR = "uploads";
+    /** Поле скачивания для создание директории */
     private static final String DOWNLOAD_DIR = "downloads";
+    /** Поле для создание директории */
     private static final String JSON = "json";
 
+    /** Поле поступление документов */
     private DocumentsArrivalDao documentsArrivalDao;
+    /** Поле продажи документов */
     private DocumentsSaleDao documentsSaleDao;
+    /** Поле перемещение документов */
     private DocumentsMovingDao documentsMovingDao;
 
     @Override
@@ -60,12 +67,12 @@ public class WindowServlet extends HttpServlet {
             case "/window/arrival":
             case "/window/sale":
             case "/window/moving":
-                modelMenu(request, response, requestPath);
+                modelMenuView(request, response, requestPath);
                 break;
             case "/window/arrival/view_document":
             case "/window/sale/view_document":
             case "/window/moving/view_document":
-                viewDocument(request, response, requestPath);
+                documentView(request, response, requestPath);
                 break;
             case "/window/arrival/view_all_documents":
             case "/window/sale/view_all_documents":
@@ -80,28 +87,35 @@ public class WindowServlet extends HttpServlet {
             case "/window/arrival/send_document":
             case "/window/sale/send_document":
             case "/window/moving/send_document":
-                sentDocument(request, response, requestPath);
+                sentDocumentView(request, response, requestPath);
             case "/window/arrival/send/report_general_list_of_product_error":
             case "/window/sale/send/report_general_list_of_product_error":
             case "/window/moving/send/report_general_list_of_product_error":
             case "/window/arrival/send/report_stock_balances_error":
             case "/window/sale/send/report_stock_balances_error":
             case "/window/moving/send/report_stock_balances_error":
-                getReports(request, response, requestPath);
+                getReportsView(request, response, requestPath);
                 break;
             case "/window/arrival/send/report":
             case "/window/sale/send/report":
             case "/window/moving/send/report":
-                getReports(request, response, requestPath);
+                getReportsView(request, response, requestPath);
                 break;
         }
     }
 
 
-
-
-
-    private void modelMenu(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+    /**
+     * Интерфейс для каждого раздела: Поступление, Продажа
+     * Перемещение.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param requestPath содержит путь
+     *        части URL от имени протокола до строки запроса.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
+    private void modelMenuView(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
         switch (requestPath) {
             case "/window/arrival":
                 request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalMenu.html").forward(request, response);
@@ -113,7 +127,18 @@ public class WindowServlet extends HttpServlet {
         }
     }
 
-    private void viewDocument(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+    /**
+     *  Интерфейс для просмотра документов.
+     *  Была добавлена для каждого раздела: Поступление, Продажа
+     *  Перемещение.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param requestPath содержит путь
+     *        части URL от имени протокола до строки запроса.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
+    private void documentView(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
         switch (requestPath) {
             case "/window/arrival/view_document":
                 List<View> viewDoc = new ArrivalProductViewImpl().findAllView();
@@ -134,6 +159,18 @@ public class WindowServlet extends HttpServlet {
 
     }
 
+    /**
+     * Два интерфейса. Первый интерфейс для показа ошибки, если наш файл который будет отправляться
+     * в базу данных отсутствует или некорректен. Второй для выдачи отчетов.
+     * Сначала у нас загружается файл или файлы, потом проверяет список товаров. Если он пустой или null ,
+     * то перенаправляет на первый интерфейс, иначе на второй.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param requestPath содержит путь
+     *        части URL от имени протокола до строки запроса.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
     private void viewAllDocuments(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
 
         switch (requestPath) {
@@ -177,6 +214,18 @@ public class WindowServlet extends HttpServlet {
 
     }
 
+
+    /**
+     * Два интерфейса. Первый интерефейс для показа ошибки. Второй для выдачи отчетов.
+     * Если запрос SQL-запрос успешно был выполнен, то сохраняет объект в базу данных и
+     * перенаправляет на второй интерфейс, иначе на первый.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param requestPath содержит путь
+     *        части URL от имени протокола до строки запроса.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
     private void sendJsonToDataBase(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
 
         switch (requestPath) {
@@ -215,7 +264,16 @@ public class WindowServlet extends HttpServlet {
         }
     }
 
-    private void sentDocument(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+    /**
+     * Интерфейс для отображение данных, перед отправкой в базу данных.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param requestPath содержит путь
+     *        части URL от имени протокола до строки запроса.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
+    private void sentDocumentView(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
         switch (requestPath) {
             case "/window/arrival/send_document":
                 request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalSend.jsp").forward(request, response);
@@ -230,7 +288,18 @@ public class WindowServlet extends HttpServlet {
 
     }
 
-    private void getReports(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
+    /**
+     * Отправляет с сервера на компьютер пользователя отчет/отчеты в zip архиве.
+     * Если параметр пустой, то отправляет все данные из базы данных или конкретные данные.
+     * Если параметр был введен не корректно, то перенаправит на интерфейс с ошибкой.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param requestPath содержит путь
+     *         части URL от имени протокола до строки запроса.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
+    private void getReportsView(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
 
         switch (requestPath) {
             case "/window/arrival/send/report_general_list_of_product_error":
@@ -340,6 +409,12 @@ public class WindowServlet extends HttpServlet {
 
     }
 
+    /**
+     * Загружает файлы типа JSON на сервер.
+     * @param request принимает на вход запрос.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     * @throws ServletException если целевой ресурс выдает это исключение.
+     */
     private void addFilesOnServer(HttpServletRequest request) throws IOException, ServletException {
         String applicationPath = request.getServletContext().getRealPath("");
         Folder folder = new Folder();
@@ -357,6 +432,13 @@ public class WindowServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Скачивает файлы типа JSON с сервера и упаковывает в zip архив.
+     * @param request принимает на вход запрос.
+     * @param response отправляет ответ пользователю.
+     * @param productList список товаров.
+     * @throws IOException если целевой ресурс выдает это исключение.
+     */
     private void downloadFileFromServer(HttpServletRequest request, HttpServletResponse response, List<View> productList) throws IOException {
         response.setContentType("application/json");
         String applicationPath = request.getServletContext().getRealPath("");
