@@ -2,7 +2,13 @@ package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.model.interfaceModel.Model;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Warehouse implements Model {
 
     @JsonProperty("warehouse_id")
@@ -11,24 +17,5 @@ public class Warehouse implements Model {
     private int productId;
     @JsonProperty("quantity")
     private int quantity;
-    //Для Jackson'a создан конструктор по умолчанию
-    public Warehouse(){}
 
-    public Warehouse(int warehouseId, int productId, int quantity) {
-        this.warehouseId = warehouseId;
-        this.productId = productId;
-        this.quantity = quantity;
-    }
-
-    public int getWarehouseId() {
-        return warehouseId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
 }

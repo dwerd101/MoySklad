@@ -1,40 +1,25 @@
 package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
+@Data
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Product {
-    //Для Jackson'a создан конструктор по умолчанию
-    public Product() {}
 
     @JsonProperty("vendor_code")
+    @NonNull
     private String vendorCode;
     @JsonProperty("product_name")
+    @NonNull
     private String productName;
     @JsonProperty("last_purchase_price")
+    @NonNull
     private int lastPurchasePrice;
     @JsonProperty("last_sale_price")
+    @NonNull
     private int lastSalePrice;
 
-    public Product(String vendorCode, String productName, int lastPurchasePrice, int lastSalePrice) {
-        this.vendorCode = vendorCode;
-        this.productName = productName;
-        this.lastPurchasePrice = lastPurchasePrice;
-        this.lastSalePrice = lastSalePrice;
-    }
 
-    public String getVendorCode() {
-        return vendorCode;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public int getLastPurchasePrice() {
-        return lastPurchasePrice;
-    }
-
-    public int getLastSalePrice() {
-        return lastSalePrice;
-    }
 }

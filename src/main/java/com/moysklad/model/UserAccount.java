@@ -1,21 +1,17 @@
 package com.moysklad.model;
 
 import com.moysklad.model.interfaceModel.Model;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@Data
+@RequiredArgsConstructor
 public class UserAccount implements Model {
-    private String name, password;
+    @NonNull
+    private String name;
+    @NonNull
+    private String password;
 
-    public UserAccount(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
 }
