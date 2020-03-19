@@ -8,20 +8,44 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
+
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class MovingOfProduct implements Model {
+
+     @Id
+     @GeneratedValue(strategy = GenerationType.AUTO)
+     @Column(name = "id")
+     private int id;
+
+     @ManyToOne
+     @JoinColumn(name = "number_id", referencedColumnName = "id")
      @JsonProperty("number_id")
      @NonNull
-     private int numberId;
+     private NumberOfProduct numberId;
+
+     @ManyToOne
+     @JoinColumn(name = "warehousea_id", referencedColumnName = "id")
      @JsonProperty("warehousea_id")
      @NonNull
-     private int warehouseAId;
+     private Warehouse warehouseAId;
+
+     @ManyToOne
+     @JoinColumn(name = "warehouseb_id", referencedColumnName = "id")
      @JsonProperty("warehouseb_id")
      @NonNull
-     private int warehouseBId;
+     private Warehouse warehouseBId;
+
+     @ManyToOne
+     @JoinColumn(name ="list_of_product_id", referencedColumnName = "id")
      @JsonProperty("list_of_product_id")
      @NonNull
-     private int listOfProductId;
+     private ListOfProduct listOfProductId;
+
+
+
+
+
  }

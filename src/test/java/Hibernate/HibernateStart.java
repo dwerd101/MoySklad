@@ -9,7 +9,15 @@ import java.util.Date;
 
 public class HibernateStart {
     public static void main(String[] args) {
-        System.out.println("Добавление объекта");
+
+
+
+
+
+
+
+
+      /*  System.out.println("Добавление объекта");
 
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -25,7 +33,7 @@ public class HibernateStart {
         session.save(product);
         session.getTransaction().commit();
 
-        session.close();
+        session.close();*/
 
     }
 

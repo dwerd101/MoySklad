@@ -7,19 +7,30 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
+
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class SaleOfProduct implements Model {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "number_id" , referencedColumnName = "id")
     @JsonProperty("number_id")
     @NonNull
-    private int numberId;
+    private NumberOfProduct numberId;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id" , referencedColumnName = "id")
     @JsonProperty("warehouse_id")
     @NonNull
-    private int warehouseId;
+    private Warehouse warehouseId;
+    @ManyToOne
+    @JoinColumn(name = "list_of_prdouct_id" , referencedColumnName = "id")
     @JsonProperty("list_of_product_id")
     @NonNull
-    private int listOfProductId;
-
+    private ListOfProduct listOfProductId;
 }

@@ -29,10 +29,10 @@ public class MovingProductDaoImpl implements DocumentsMovingDao {
         try {
             connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_PRODUCT);
-            preparedStatement.setInt(1, model.getNumberId());
+         /*   preparedStatement.setInt(1, model.getNumberId());
             preparedStatement.setInt(2, model.getWarehouseAId());
             preparedStatement.setInt(3, model.getWarehouseBId());
-            preparedStatement.setInt(4, model.getListOfProductId());
+            preparedStatement.setInt(4, model.getListOfProductId());*/
             preparedStatement.execute();
         } catch (SQLException e) {
             checkException = true;
@@ -45,10 +45,10 @@ public class MovingProductDaoImpl implements DocumentsMovingDao {
         try {
             connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_PRODUCT);
-            preparedStatement.setInt(1, model.getNumberId());
+          /*  preparedStatement.setInt(1, model.getNumberId());
             preparedStatement.setInt(2, model.getWarehouseAId());
             preparedStatement.setInt(3, model.getWarehouseBId());
-            preparedStatement.setInt(4, model.getListOfProductId());
+            preparedStatement.setInt(4, model.getListOfProductId());*/
             preparedStatement.setInt(5, id);
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -81,12 +81,12 @@ public class MovingProductDaoImpl implements DocumentsMovingDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SELECT_ALL);
             while (resultSet.next()) {
-                int numberId = resultSet.getInt("number_id");
+            /*    int numberId = resultSet.getInt("number_id");
                 int warehouseAId = resultSet.getInt("warehousea_id");
                 int warehouseBId = resultSet.getInt("warehouseb_id");
                 int listOfProductId = resultSet.getInt("list_of_product_id");
                 MovingOfProduct product = new MovingOfProduct(numberId, warehouseAId, warehouseBId, listOfProductId);
-                products.add(product);
+                products.add(product);*/
             }
             return products;
         } catch (SQLException e) {

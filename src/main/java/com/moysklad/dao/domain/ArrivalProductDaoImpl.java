@@ -80,8 +80,8 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
                 int numberId = resultSet.getInt("number_id");
                 int warehouseId = resultSet.getInt("warehouse_id");
                 int listOfProductId = resultSet.getInt("list_of_product_id");
-                ArrivalOfProduct arrivalOfProduct = new ArrivalOfProduct(numberId,warehouseId,listOfProductId);
-                products.add(arrivalOfProduct);
+              /*  ArrivalOfProduct arrivalOfProduct = new ArrivalOfProduct(numberId,warehouseId,listOfProductId);
+                products.add(arrivalOfProduct);*/
             }
             return products;
         } catch (SQLException e) {
@@ -92,14 +92,14 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
     }
 
     private void preparedStatementArrivalOfProduct(PreparedStatement preparedStatement, ArrivalOfProduct model) {
-        try {
+      /*  try {
             preparedStatement.setInt(1, model.getNumberId());
             preparedStatement.setInt(2, model.getWarehouseId());
             preparedStatement.setInt(3, model.getListOfProductId());
         } catch (SQLException e) {
             checkException = true;
             e.printStackTrace();
-        }
+        }*/
     }
     @Override
     public boolean isCheckException() {
