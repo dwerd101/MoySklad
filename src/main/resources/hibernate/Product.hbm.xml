@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.moysklad.model.Product" table="product" schema="public" catalog="moy_sklad">
+        <id name="id">
+            <column name="id" sql-type="integer"/>
+        </id>
+        <property name="vendorCode">
+            <column name="vendor_code" sql-type="varchar(50)" length="100" not-null="true"/>
+        </property>
+        <property name="productName">
+            <column name="product_name" sql-type="varchar(50)" length="50" not-null="true"/>
+        </property>
+        <property name="lastPurchasePrice">
+            <column name="last_purchase_price" sql-type="integer" not-null="true"/>
+        </property>
+        <property name="lastSalePrice">
+            <column name="last_sale_price" sql-type="integer" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
