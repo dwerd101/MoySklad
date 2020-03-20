@@ -8,6 +8,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -33,5 +35,9 @@ public class Warehouse implements Model {
     @JsonProperty("quantity")
     @NonNull
     private int quantity;
+
+    /*@OneToMany(mappedBy = "warehouseId", cascade = CascadeType.ALL)
+    private Set<ArrivalOfProduct> arrivalOfProductWarehouse = new HashSet<>();*/
+
 
 }

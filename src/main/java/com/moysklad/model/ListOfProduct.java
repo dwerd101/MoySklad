@@ -6,6 +6,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -34,5 +36,8 @@ public class ListOfProduct {
     @JoinColumn(name = "selling_price_id", referencedColumnName = "id")
     @NonNull
     private SellingPrice sellingPriceId;
+
+    /*@OneToMany(mappedBy = "listOfProductId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<ArrivalOfProduct> arrivalOfProductList = new HashSet<>();*/
 
 }

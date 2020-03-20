@@ -18,7 +18,7 @@ public class ArrivalOfProduct implements Model {
     @Column(name = "id")
     private int id;
     @ManyToOne
-    @JoinColumn(name = "number_id", referencedColumnName = "id")
+    @JoinColumn( name = "number_id", referencedColumnName = "id")
     @JsonProperty("number_id")
     @NonNull
     private NumberOfProduct numberId;
@@ -26,11 +26,13 @@ public class ArrivalOfProduct implements Model {
     @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
     @JsonProperty("warehouse_id")
     @NonNull
-    private Warehouse warehouseId;
+   @ToString.Exclude private Warehouse warehouseId;
     @ManyToOne
     @JoinColumn(name = "list_of_product_id" , referencedColumnName = "id")
     @JsonProperty("list_of_product_id")
     @NonNull
-    private ListOfProduct listOfProductId;
+   @ToString.Exclude private ListOfProduct listOfProductId;
+
+
 
 }

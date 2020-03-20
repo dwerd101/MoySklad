@@ -33,13 +33,13 @@
     </tr>
     <c:forEach items="${arrivalProduct}" var="product">
         <tr>
-            <td style="color: white; text-align: center" >${product.numberId}</td>
-            <td style="color: white; text-align: center">${product.warehouseId}</td>
-            <td style="color: white; text-align: center">${product.listOfProductId}</td>
-            <td style="color: white; text-align: center">${product.productId}</td>
-            <td style="color: white; text-align: center">${product.productName}</td>
-            <td style="color: white; text-align: center">${product.quantity}</td>
-            <td style="color: white; text-align: center">${product.price}</td>
+            <td style="color: white; text-align: center" >${product.id}</td>
+            <td style="color: white; text-align: center" >${product.numberId.getId()}</td>
+            <td style="color: white; text-align: center">${product.warehouseId.getId()}</td>
+            <td style="color: white; text-align: center">${product.listOfProductId.getId()}</td>
+            <td style="color: white; text-align: center">${product.listOfProductId.getProductId().getProductName()}</td>
+            <td style="color: white; text-align: center">${product.listOfProductId.getQuantity()}</td>
+            <td style="color: white; text-align: center">${product.listOfProductId.getPurchasePriceId().getPrice()}</td>
         </tr>
     </c:forEach>
 </table>

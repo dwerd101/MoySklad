@@ -2,12 +2,11 @@ package com.moysklad.model;
 
 
 import com.moysklad.model.interfaceModel.Model;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -23,6 +22,11 @@ public class NumberOfProduct implements Model {
     @Column(name = "number", nullable = true)
     @NonNull
     private int number;
+
+//    @OneToMany(mappedBy = "numberId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @ToString.Exclude private Set<ArrivalOfProduct> arrivalOfProductNumber = new HashSet<>();
+
+
 
 
 }
