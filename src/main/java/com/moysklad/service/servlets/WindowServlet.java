@@ -1,11 +1,13 @@
 package com.moysklad.service.servlets;
 
-import com.moysklad.dao.domain.ArrivalProductDaoImpl;
-import com.moysklad.dao.domain.MovingProductDaoImpl;
-import com.moysklad.dao.domain.SaleProductDaoImpl;
-import com.moysklad.dao.domain.documentsDao.DocumentsArrivalDao;
-import com.moysklad.dao.domain.documentsDao.DocumentsMovingDao;
-import com.moysklad.dao.domain.documentsDao.DocumentsSaleDao;
+import com.moysklad.dao.domain.HibernateDaoImpl.service.ArrivalProductService;
+import com.moysklad.dao.domain.JdbcDaoImpl.ArrivalProductDaoImpl;
+import com.moysklad.dao.domain.JdbcDaoImpl.MovingProductDaoImpl;
+import com.moysklad.dao.domain.JdbcDaoImpl.SaleProductDaoImpl;
+import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsArrivalDao;
+import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsMovingDao;
+import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsSaleDao;
+import com.moysklad.hibernate.HibernateUtil;
 import com.moysklad.model.ArrivalOfProduct;
 import com.moysklad.model.MovingOfProduct;
 import com.moysklad.model.SaleOfProduct;
@@ -15,6 +17,7 @@ import com.moysklad.service.json.Converter;
 import com.moysklad.service.zip.ZipArchive;
 import com.moysklad.view.*;
 import com.moysklad.view.interfaceView.View;
+import org.hibernate.SessionFactory;
 
 import java.io.*;
 import java.util.List;
@@ -37,6 +40,8 @@ public class WindowServlet extends HttpServlet {
     /** Поле отчеты */
     private List<View> reports;
 
+    private ArrivalProductService productService;
+
     /** Поле загрузки для создание директории */
     private static final String UPLOAD_DIR = "uploads";
     /** Поле скачивания для создание директории */
@@ -54,6 +59,11 @@ public class WindowServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         req.getServletContext().getRequestDispatcher("/view/html/Window.html").forward(req, response);
+    }
+
+    @Override
+    public void init() throws ServletException {
+        productService = new ArrivalProductService();
     }
 
     @Override
@@ -142,7 +152,8 @@ public class WindowServlet extends HttpServlet {
         switch (requestPath) {
             case "/window/arrival/view_document":
                 List<View> viewDoc = new ArrivalProductViewImpl().findAllView();
-                request.setAttribute("arrivalProduct", viewDoc);
+                List<ArrivalOfProduct> test = productService.findAll();
+                request.setAttribute("arrivalProduct", test);
                 request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalViewDocument.jsp").forward(request, response);
                 break;
             case "/window/sale/view_document":

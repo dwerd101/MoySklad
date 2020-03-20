@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name="purchase_price")
 public class PurchasePrice {
 
     @Id

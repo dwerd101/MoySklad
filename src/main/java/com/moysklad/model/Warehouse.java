@@ -13,26 +13,23 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name="warehouse")
 public class Warehouse implements Model {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
-
-
     @ManyToOne
     @JoinColumn(name = "warehouse_id" , referencedColumnName = "id")
     @JsonProperty("warehouse_id")
     @NonNull
-    private int warehouseId;
+   private NumberOfWarehose numberOfWarehoseId;
     @ManyToOne
     @JoinColumn(name = "product_id" , referencedColumnName = "id")
     @JsonProperty("product_id")
     @NonNull
-    private int productId;
-    @Column(name = "quantity", nullable = true)
+    private Product productId;
+    @Column(name = "quantity")
     @JsonProperty("quantity")
     @NonNull
     private int quantity;

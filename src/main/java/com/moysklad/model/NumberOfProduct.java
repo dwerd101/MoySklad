@@ -7,20 +7,18 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name="number_of_product")
 public class NumberOfProduct implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    @NonNull
     private int id;
     @Column(name = "number", nullable = true)
     @NonNull

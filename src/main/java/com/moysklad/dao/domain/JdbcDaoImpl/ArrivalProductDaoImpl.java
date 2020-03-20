@@ -1,6 +1,6 @@
-package com.moysklad.dao.domain;
+package com.moysklad.dao.domain.JdbcDaoImpl;
 
-import com.moysklad.dao.domain.documentsDao.DocumentsArrivalDao;
+import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsArrivalDao;
 import com.moysklad.model.ArrivalOfProduct;
 
 import com.moysklad.service.connection.ConnectionDataBaseFactory;

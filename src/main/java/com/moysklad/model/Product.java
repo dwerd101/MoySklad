@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Table(name="product")
 public class Product {
 
     @Id
@@ -17,22 +18,22 @@ public class Product {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "vendor_code", nullable = true, length = 100)
+    @Column(name = "vendor_code", length = 100)
     @JsonProperty("vendor_code")
     @NonNull
     private String vendorCode;
 
-    @Column(name = "product_name", nullable = true, length = 50)
+    @Column(name = "product_name",  length = 50)
     @JsonProperty("product_name")
     @NonNull
     private String productName;
 
-    @Column(name = "last_purchase_price", nullable = true)
+    @Column(name = "last_purchase_price")
     @JsonProperty("last_purchase_price")
     @NonNull
     private int lastPurchasePrice;
 
-    @Column(name = "last_sale_price", nullable = true)
+    @Column(name = "last_sale_price")
     @JsonProperty("last_sale_price")
     @NonNull
     private int lastSalePrice;

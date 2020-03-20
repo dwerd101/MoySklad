@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name="sale_of_product")
 public class SaleOfProduct implements Model {
 
     @Id
@@ -29,7 +30,7 @@ public class SaleOfProduct implements Model {
     @NonNull
     private Warehouse warehouseId;
     @ManyToOne
-    @JoinColumn(name = "list_of_prdouct_id" , referencedColumnName = "id")
+    @JoinColumn(name = "list_of_product_id" , referencedColumnName = "id")
     @JsonProperty("list_of_product_id")
     @NonNull
     private ListOfProduct listOfProductId;

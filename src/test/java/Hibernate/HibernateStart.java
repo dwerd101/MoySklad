@@ -1,7 +1,8 @@
 package Hibernate;
 
+import com.moysklad.dao.domain.HibernateDaoImpl.service.ArrivalProductService;
 import com.moysklad.hibernate.HibernateUtil;
-import com.moysklad.model.Product;
+import com.moysklad.model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -9,10 +10,6 @@ import java.util.Date;
 
 public class HibernateStart {
     public static void main(String[] args) {
-
-
-
-
 
 
 

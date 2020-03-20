@@ -9,10 +9,11 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-
+@Entity
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name="moving_of_product")
 public class MovingOfProduct implements Model {
 
      @Id

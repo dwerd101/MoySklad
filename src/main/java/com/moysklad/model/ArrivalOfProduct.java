@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Table(name="arrival_of_product")
 public class ArrivalOfProduct implements Model {
 
     @Id

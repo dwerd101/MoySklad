@@ -1,4 +1,4 @@
-package com.moysklad.dao;
+package com.moysklad.dao.jdbcDao;
 
 public interface CrudDao<T> {
     void save (T model);

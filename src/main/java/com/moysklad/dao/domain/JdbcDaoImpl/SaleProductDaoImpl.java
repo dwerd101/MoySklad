@@ -1,5 +1,5 @@
-package com.moysklad.dao.domain;
-import com.moysklad.dao.domain.documentsDao.DocumentsSaleDao;
+package com.moysklad.dao.domain.JdbcDaoImpl;
+import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsSaleDao;
 import com.moysklad.model.SaleOfProduct;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 
@@ -66,7 +66,7 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
 
     @Override
     public List<SaleOfProduct> findAll() {
-        try {
+      /*  try {
             List<SaleOfProduct> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
@@ -82,19 +82,19 @@ public class SaleProductDaoImpl implements DocumentsSaleDao {
         } catch (SQLException e) {
             checkException = true;
             e.printStackTrace();
-        }
+        }*/
         return null;
     }
 
     private void preparedStatementSaleOfProduct(PreparedStatement preparedStatement, SaleOfProduct model) {
-        try {
+    /*    try {
             preparedStatement.setInt(1, model.getNumberId());
             preparedStatement.setInt(2, model.getWarehouseId());
             preparedStatement.setInt(3, model.getListOfProductId());
         } catch (SQLException e) {
             checkException = true;
             e.printStackTrace();
-        }
+        }*/
     }
     @Override
     public boolean isCheckException() {

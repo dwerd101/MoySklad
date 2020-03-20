@@ -7,23 +7,24 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@Table(name="list_of_product")
 public class ListOfProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    @NonNull
     private int id;
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     @NonNull
     private Product productId;
     @NonNull
-    @Column(name = "quantity",nullable = true)
+    @Column(name = "quantity")
     private int quantity;
     @ManyToOne
     @JoinColumn(name = "purchase_price_id", referencedColumnName = "id")

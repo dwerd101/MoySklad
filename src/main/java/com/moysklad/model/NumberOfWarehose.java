@@ -14,13 +14,12 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-
+@Table(name="number_of_warehouse")
 public class NumberOfWarehose implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    @NonNull
     private int id;
     @Column(name = "warehouse_name")
     @NonNull

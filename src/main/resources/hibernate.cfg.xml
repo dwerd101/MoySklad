@@ -13,6 +13,17 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
 
     <mapping class="com.moysklad.model.Product"/>
+    <mapping class="com.moysklad.model.ArrivalOfProduct"/>
+    <mapping class="com.moysklad.model.ListOfProduct"/>
+    <mapping class="com.moysklad.model.MovingOfProduct"/>
+    <mapping class="com.moysklad.model.NumberOfProduct"/>
+    <mapping class="com.moysklad.model.PurchasePrice"/>
+    <mapping class="com.moysklad.model.SaleOfProduct"/>
+    <mapping class="com.moysklad.model.SellingPrice"/>
+    <mapping class="com.moysklad.model.UserAccount"/>
+    <mapping class="com.moysklad.model.Warehouse"/>
+    <mapping class="com.moysklad.model.NumberOfWarehose"/>
+
 
   </session-factory>
 </hibernate-configuration>
