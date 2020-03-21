@@ -9,7 +9,9 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Table(name="arrival_of_product")
 public class ArrivalOfProduct implements Model {
 
@@ -20,18 +22,17 @@ public class ArrivalOfProduct implements Model {
     @ManyToOne
     @JoinColumn( name = "number_id", referencedColumnName = "id")
     @JsonProperty("number_id")
-    @NonNull
-    private NumberOfProduct numberId;
+     private NumberOfProduct numberId;
     @ManyToOne
     @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
     @JsonProperty("warehouse_id")
-    @NonNull
-   @ToString.Exclude private Warehouse warehouseId;
+    private NumberOfWarehose warehouseId;
     @ManyToOne
     @JoinColumn(name = "list_of_product_id" , referencedColumnName = "id")
     @JsonProperty("list_of_product_id")
-    @NonNull
-   @ToString.Exclude private ListOfProduct listOfProductId;
+    private ListOfProduct listOfProductId;
+
+
 
 
 

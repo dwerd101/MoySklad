@@ -5,17 +5,17 @@ import lombok.*;
 import lombok.extern.java.Log;
 
 import javax.persistence.*;
-
-@Entity
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
+@Entity
 @Table(name="product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
+    @JsonProperty("id")
     private int id;
 
     @Column(name = "vendor_code", length = 100)

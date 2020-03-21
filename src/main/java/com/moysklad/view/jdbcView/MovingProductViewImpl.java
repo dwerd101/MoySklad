@@ -1,4 +1,4 @@
-package com.moysklad.view;
+package com.moysklad.view.jdbcView;
 
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import com.moysklad.view.interfaceView.View;

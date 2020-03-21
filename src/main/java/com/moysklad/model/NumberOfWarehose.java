@@ -1,10 +1,8 @@
 package com.moysklad.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.model.interfaceModel.Model;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,15 +11,17 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name="number_of_warehouse")
 public class NumberOfWarehose implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    @JsonProperty("id")
+    @Getter private int id;
     @Column(name = "warehouse_name")
-    @NonNull
+    @JsonProperty("warehouse_name")
     private String warehouseName;
 }

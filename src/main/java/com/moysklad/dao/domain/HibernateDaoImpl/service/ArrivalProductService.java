@@ -18,7 +18,7 @@ public class ArrivalProductService {
     getProduct().save(product);
     getProduct().closeCurrentSessionWithTransaction();
     }
-    public void update(  ArrivalOfProduct product) {
+    public void update(ArrivalOfProduct product) {
      getProduct().openCurrentSessionWithTransaction();
      getProduct().update(product);
      getProduct().closeCurrentSessionWithTransaction();

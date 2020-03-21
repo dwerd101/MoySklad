@@ -27,9 +27,9 @@
             </tr>
             <c:forEach items="${sentArrivalProduct}" var="product">
                 <tr>
-                    <td style="color: white; text-align: center" >${product.numberId}</td>
-                    <td style="color: white; text-align: center">${product.warehouseId}</td>
-                    <td style="color: white; text-align: center">${product.listOfProductId}</td>
+                    <td style="color: white; text-align: center" >${product.numberId.getId()}</td>
+                    <td style="color: white; text-align: center">${product.warehouseId.getId()}</td>
+                    <td style="color: white; text-align: center">${product.listOfProductId.getId()}</td>
                 </tr>
             </c:forEach>
         </table>

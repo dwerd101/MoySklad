@@ -7,7 +7,6 @@ import com.moysklad.dao.domain.JdbcDaoImpl.SaleProductDaoImpl;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsArrivalDao;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsMovingDao;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsSaleDao;
-import com.moysklad.hibernate.HibernateUtil;
 import com.moysklad.model.ArrivalOfProduct;
 import com.moysklad.model.MovingOfProduct;
 import com.moysklad.model.SaleOfProduct;
@@ -15,11 +14,14 @@ import com.moysklad.model.interfaceModel.Model;
 import com.moysklad.service.folder.Folder;
 import com.moysklad.service.json.Converter;
 import com.moysklad.service.zip.ZipArchive;
-import com.moysklad.view.*;
+import com.moysklad.view.hibernateView.ArrivalProductHibernateViewImpl;
+import com.moysklad.view.interfaceView.HibernateView;
 import com.moysklad.view.interfaceView.View;
-import org.hibernate.SessionFactory;
+import com.moysklad.view.jdbcView.*;
+import org.hibernate.Hibernate;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -152,8 +154,10 @@ public class WindowServlet extends HttpServlet {
         switch (requestPath) {
             case "/window/arrival/view_document":
                 List<View> viewDoc = new ArrivalProductViewImpl().findAllView();
-                List<ArrivalOfProduct> test = productService.findAll();
-                request.setAttribute("arrivalProduct", test);
+              //  List<ArrivalOfProduct> test = productService.findAll();
+                List<ArrivalOfProduct> viewHibernateDoc = new ArrivalProductHibernateViewImpl().findAllView();
+                request.setAttribute("arrivalProduct", viewHibernateDoc);
+
                 request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalViewDocument.jsp").forward(request, response);
                 break;
             case "/window/sale/view_document":
