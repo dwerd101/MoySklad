@@ -1,7 +1,6 @@
 package com.moysklad.service.servlets;
 
 import com.moysklad.dao.domain.HibernateDaoImpl.service.ArrivalProductService;
-import com.moysklad.dao.domain.JdbcDaoImpl.ArrivalProductDaoImpl;
 import com.moysklad.dao.domain.JdbcDaoImpl.MovingProductDaoImpl;
 import com.moysklad.dao.domain.JdbcDaoImpl.SaleProductDaoImpl;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsArrivalDao;
@@ -15,11 +14,8 @@ import com.moysklad.service.folder.Folder;
 import com.moysklad.service.json.Converter;
 import com.moysklad.service.zip.ZipArchive;
 import com.moysklad.view.hibernateView.ArrivalProductHibernateViewImpl;
-import com.moysklad.view.interfaceView.HibernateView;
 import com.moysklad.view.interfaceView.View;
 import com.moysklad.view.jdbcView.*;
-import org.hibernate.Hibernate;
-import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -59,6 +55,8 @@ public class WindowServlet extends HttpServlet {
     private DocumentsSaleDao documentsSaleDao;
     /** Поле перемещение документов */
     private DocumentsMovingDao documentsMovingDao;
+
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
@@ -250,7 +248,6 @@ public class WindowServlet extends HttpServlet {
                 try {
                 for (Model product : productList) {
                     productService.save((ArrivalOfProduct) product);
-                    //documentsArrivalDao.save((ArrivalOfProduct) product);
                 }
                 request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
         } catch (PersistenceException e) {
@@ -378,7 +375,7 @@ public class WindowServlet extends HttpServlet {
                 String nameStockSale = request.getParameter("stockName");
                 if (nameStockSale.isEmpty()) {
                     reports = new StockBalancesViewImpl().findAllView();
-                    downloadFileFromServer(request, response, reports);
+              //      downloadFileFromServer(request, response, reports);
                 } else {
                     reports = new StockBalancesViewImpl().findByName(nameStockSale);
                     if (reports.size() == 0) {

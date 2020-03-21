@@ -42,10 +42,7 @@ public class ArrivalProductHibDaoImpl implements DocumentsArrivalHibDao {
         return products;
     }
 
-    @Override
-    public boolean isCheckException() {
-        return false;
-    }
+
 
     @Override
     public void save(ArrivalOfProduct model) {

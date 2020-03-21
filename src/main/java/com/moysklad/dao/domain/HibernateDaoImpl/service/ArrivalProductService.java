@@ -37,9 +37,9 @@ public class ArrivalProductService {
     }
     public List<ArrivalOfProduct> findAll() {
         getProduct().openCurrentSession();
-        List<ArrivalOfProduct> books = getProduct().findAll();
+        List<ArrivalOfProduct> list = getProduct().findAll();
         getProduct().closeCurrentSession();
-        return books;
+        return list;
     }
 
     public ArrivalProductHibDaoImpl getProduct() {
