@@ -19,10 +19,12 @@ import com.moysklad.view.interfaceView.HibernateView;
 import com.moysklad.view.interfaceView.View;
 import com.moysklad.view.jdbcView.*;
 import org.hibernate.Hibernate;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
@@ -245,15 +247,18 @@ public class WindowServlet extends HttpServlet {
 
         switch (requestPath) {
             case "/window/arrival/send":
-                documentsArrivalDao = new ArrivalProductDaoImpl();
+                try {
                 for (Model product : productList) {
-                    documentsArrivalDao.save((ArrivalOfProduct) product);
+                    productService.save((ArrivalOfProduct) product);
+                    //documentsArrivalDao.save((ArrivalOfProduct) product);
                 }
-                if (documentsArrivalDao.isCheckException()) {
+                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
+        } catch (PersistenceException e) {
+                    e.printStackTrace();
                     request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalErrorSendToDb.html").forward(request, response);
                 }
-                else request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
-                break;
+
+        break;
             case "/window/sale/send":
                 documentsSaleDao = new SaleProductDaoImpl();
                 for (Model product : productList) {
@@ -316,12 +321,13 @@ public class WindowServlet extends HttpServlet {
      */
     private void getReportsView(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
 
-        switch (requestPath) {
+         switch (requestPath) {
             case "/window/arrival/send/report_general_list_of_product_error":
                 request.setCharacterEncoding("UTF-8");
                 String nameListArrival = request.getParameter("productName");
                 if (nameListArrival.isEmpty()) {
                     reports = new GeneralListOfProductViewImpl().findAllView();
+
                     downloadFileFromServer(request, response, reports);
                 } else {
                     reports = new GeneralListOfProductViewImpl().findByName(nameListArrival);
