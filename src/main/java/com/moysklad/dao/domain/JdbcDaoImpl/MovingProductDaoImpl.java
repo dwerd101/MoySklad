@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Не используется, вместо него Hibernate
 public class MovingProductDaoImpl implements DocumentsMovingDao {
     Connection connection;
     //language=SQL
@@ -95,7 +96,7 @@ public class MovingProductDaoImpl implements DocumentsMovingDao {
         }
         return null;
     }
-    @Override
+
     public boolean isCheckException() {
         return checkException;
     }

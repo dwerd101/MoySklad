@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DocumentsMovingDao extends CrudDao<MovingOfProduct> {
     List<MovingOfProduct> findAll();
-    boolean isCheckException();
+
 }

@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Не используется, вместо него Hibernate
 public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
     Connection connection;
     //language=SQL
@@ -101,7 +102,7 @@ public class ArrivalProductDaoImpl implements DocumentsArrivalDao {
             e.printStackTrace();
         }*/
     }
-    @Override
+
     public boolean isCheckException() {
         return checkException;
     }

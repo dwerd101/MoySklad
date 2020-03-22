@@ -11,7 +11,8 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name="number_of_product")
 public class NumberOfProduct implements Model {
 

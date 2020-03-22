@@ -2,16 +2,15 @@ package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.model.interfaceModel.Model;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name="sale_of_product")
 public class SaleOfProduct implements Model {
 
@@ -28,7 +27,7 @@ public class SaleOfProduct implements Model {
     @JoinColumn(name = "warehouse_id" , referencedColumnName = "id")
     @JsonProperty("warehouse_id")
     @NonNull
-    private Warehouse warehouseId;
+    private NumberOfWarehose warehouseId;
     @ManyToOne
     @JoinColumn(name = "list_of_product_id" , referencedColumnName = "id")
     @JsonProperty("list_of_product_id")

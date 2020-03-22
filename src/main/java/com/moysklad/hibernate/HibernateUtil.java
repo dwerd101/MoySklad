@@ -12,16 +12,16 @@ public class HibernateUtil {
     private static SessionFactory sessionFactory = buildSessionFactory();
 
     protected static SessionFactory buildSessionFactory() {
-        // A SessionFactory is set up once for an application!
+        // SessionFactory устанавливается один раз для приложения!
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
+                .configure() //настраивает настройки из hibernate.cfg.xml
                 .build();
         try {
             sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
         }
         catch (Exception e) {
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
+           /* Реестр будет уничтожен SessionFactory, но у нас возникли проблемы при создании SessionFactory,
+                    поэтому уничтожьте его вручную.*/
             StandardServiceRegistryBuilder.destroy( registry );
 
             throw new ExceptionInInitializerError("Initial SessionFactory failed" + e);
@@ -35,7 +35,7 @@ public class HibernateUtil {
     }
 
     public static void shutdown() {
-        // Close caches and connection pools
+        // Закрывает кэши и пулы соединений
         getSessionFactory().close();
     }
 }

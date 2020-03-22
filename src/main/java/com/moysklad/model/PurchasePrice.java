@@ -1,19 +1,18 @@
 package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import com.moysklad.model.interfaceModel.Model;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
-@Entity
+@AllArgsConstructor
+@Builder
 @Table(name="purchase_price")
-public class PurchasePrice {
+public class PurchasePrice implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

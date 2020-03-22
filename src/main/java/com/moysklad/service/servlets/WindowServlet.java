@@ -1,6 +1,8 @@
 package com.moysklad.service.servlets;
 
 import com.moysklad.dao.domain.HibernateDaoImpl.service.ArrivalProductService;
+import com.moysklad.dao.domain.HibernateDaoImpl.service.MovingProductService;
+import com.moysklad.dao.domain.HibernateDaoImpl.service.SaleProductService;
 import com.moysklad.dao.domain.JdbcDaoImpl.MovingProductDaoImpl;
 import com.moysklad.dao.domain.JdbcDaoImpl.SaleProductDaoImpl;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsArrivalDao;
@@ -14,6 +16,8 @@ import com.moysklad.service.folder.Folder;
 import com.moysklad.service.json.Converter;
 import com.moysklad.service.zip.ZipArchive;
 import com.moysklad.view.hibernateView.ArrivalProductHibernateViewImpl;
+import com.moysklad.view.hibernateView.MovingProductHibernateViewImpl;
+import com.moysklad.view.hibernateView.SaleProductHibernateViewImpl;
 import com.moysklad.view.interfaceView.View;
 import com.moysklad.view.jdbcView.*;
 
@@ -40,7 +44,12 @@ public class WindowServlet extends HttpServlet {
     /** Поле отчеты */
     private List<View> reports;
 
-    private ArrivalProductService productService;
+    /** Поле поступление документов */
+    private ArrivalProductService serviceAr;
+    /** Поле продажи документов */
+    private SaleProductService serviceSale;
+    /** Поле перемещение документов */
+    private MovingProductService serviceMoving;
 
     /** Поле загрузки для создание директории */
     private static final String UPLOAD_DIR = "uploads";
@@ -49,14 +58,12 @@ public class WindowServlet extends HttpServlet {
     /** Поле для создание директории */
     private static final String JSON = "json";
 
-    /** Поле поступление документов */
+    /** Поле поступление документов JDBC */
     private DocumentsArrivalDao documentsArrivalDao;
-    /** Поле продажи документов */
+    /** Поле продажи документов JDBC */
     private DocumentsSaleDao documentsSaleDao;
-    /** Поле перемещение документов */
+    /** Поле перемещение документов JDBC */
     private DocumentsMovingDao documentsMovingDao;
-
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
@@ -65,7 +72,9 @@ public class WindowServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        productService = new ArrivalProductService();
+        serviceAr = new ArrivalProductService();
+        serviceSale = new SaleProductService();
+        serviceMoving = new MovingProductService();
     }
 
     @Override
@@ -153,21 +162,19 @@ public class WindowServlet extends HttpServlet {
     private void documentView(HttpServletRequest request, HttpServletResponse response, String requestPath) throws  ServletException, IOException {
         switch (requestPath) {
             case "/window/arrival/view_document":
-                List<View> viewDoc = new ArrivalProductViewImpl().findAllView();
-              //  List<ArrivalOfProduct> test = productService.findAll();
-                List<ArrivalOfProduct> viewHibernateDoc = new ArrivalProductHibernateViewImpl().findAllView();
-                request.setAttribute("arrivalProduct", viewHibernateDoc);
+                List<ArrivalOfProduct> docAr = new ArrivalProductHibernateViewImpl().findAllView();
+                request.setAttribute("arrivalProduct", docAr);
 
                 request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/DbArrivalViewDocument.jsp").forward(request, response);
                 break;
             case "/window/sale/view_document":
-                viewDoc = new SaleProductViewImpl().findAllView();
-                request.setAttribute("saleProduct", viewDoc);
+                List<SaleOfProduct> docSale = new SaleProductHibernateViewImpl().findAllView();
+                request.setAttribute("saleProduct", docSale);
                 request.getServletContext().getRequestDispatcher("/view/jsp/SaleProduct/DbSaleViewDocument.jsp").forward(request, response);
                 break;
             case "/window/moving/view_document":
-                viewDoc = new MovingProductViewImpl().findAllView();
-                request.setAttribute("movingProduct", viewDoc);
+                List<MovingOfProduct> docMov = new MovingProductHibernateViewImpl().findAllView();
+                request.setAttribute("movingProduct", docMov);
                 request.getServletContext().getRequestDispatcher("/view/jsp/MovingProduct/DbMovingViewDocument.jsp").forward(request, response);
                 break;
         }
@@ -246,37 +253,41 @@ public class WindowServlet extends HttpServlet {
         switch (requestPath) {
             case "/window/arrival/send":
                 try {
-                for (Model product : productList) {
-                    productService.save((ArrivalOfProduct) product);
-                }
-                request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
-        } catch (PersistenceException e) {
+                    for (Model product : productList) {
+                        serviceAr.save((ArrivalOfProduct) product);
+                    }
+                    request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/DbArrivalSentSuccess.html").forward(request, response);
+                } catch (PersistenceException e) {
                     e.printStackTrace();
                     request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalErrorSendToDb.html").forward(request, response);
                 }
 
-        break;
+                break;
             case "/window/sale/send":
-                documentsSaleDao = new SaleProductDaoImpl();
-                for (Model product : productList) {
-                    documentsSaleDao.save((SaleOfProduct) product);
-                }
-                if (documentsSaleDao.isCheckException()) {
+                try {
+                    for (Model product : productList) {
+                        serviceSale.save((SaleOfProduct) product);
+                    }
+                    request.getServletContext().getRequestDispatcher("/view/html/SaleProduct/DbSaleSentSuccess.html").forward(request, response);
+
+
+                } catch (PersistenceException e) {
+                    e.printStackTrace();
                     request.getServletContext().getRequestDispatcher("/view/html/SaleProduct/SaleErrorSendToDb.html").forward(request, response);
                 }
-               else request.getServletContext().getRequestDispatcher("/view/html/SaleProduct/DbSaleSentSuccess.html").forward(request, response);
                 break;
 
 
             case "/window/moving/send":
-                documentsMovingDao = new MovingProductDaoImpl();
-                for (Model product : productList) {
-                    documentsMovingDao.save((MovingOfProduct) product);
-                }
-                if (documentsMovingDao.isCheckException()) {
+                try {
+                    for (Model product : productList) {
+                        serviceMoving.save((MovingOfProduct) product);
+                    }
+                    request.getServletContext().getRequestDispatcher("/view/html/MovingProduct/DbMovingSentSuccess.html").forward(request, response);
+                } catch (PersistenceException e) {
                     request.getServletContext().getRequestDispatcher("/view/html/MovingProduct/MovingErrorSendToDb.html").forward(request, response);
+
                 }
-              else request.getServletContext().getRequestDispatcher("/view/html/MovingProduct/DbMovingSentSuccess.html").forward(request, response);
                 break;
         }
     }
@@ -375,7 +386,7 @@ public class WindowServlet extends HttpServlet {
                 String nameStockSale = request.getParameter("stockName");
                 if (nameStockSale.isEmpty()) {
                     reports = new StockBalancesViewImpl().findAllView();
-              //      downloadFileFromServer(request, response, reports);
+                    downloadFileFromServer(request, response, reports);
                 } else {
                     reports = new StockBalancesViewImpl().findByName(nameStockSale);
                     if (reports.size() == 0) {

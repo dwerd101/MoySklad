@@ -1,14 +1,13 @@
 package com.moysklad.model;
 
 import com.moysklad.model.interfaceModel.Model;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="user_account")
 public class UserAccount implements Model {

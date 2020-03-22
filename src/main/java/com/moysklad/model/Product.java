@@ -1,16 +1,18 @@
 package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.moysklad.model.interfaceModel.Model;
 import lombok.*;
 import lombok.extern.java.Log;
 
 import javax.persistence.*;
+@Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
-@Entity
+@AllArgsConstructor
+@Builder
 @Table(name="product")
-public class Product {
+public class Product implements Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

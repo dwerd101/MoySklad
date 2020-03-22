@@ -6,7 +6,9 @@ import lombok.Data;
 
 import java.util.List;
 
-
+/**
+ * Класс ArrivalProductService использует объект DAO для взаимодействия с базой данных.
+ */
 @Data
 public class ArrivalProductService {
     private static ArrivalProductHibDaoImpl product;

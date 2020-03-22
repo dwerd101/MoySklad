@@ -7,7 +7,7 @@ import com.moysklad.model.SaleOfProduct;
 
 import java.util.List;
 
-public interface DocumentsSaleHibDao extends CrudHibernateDao {
+public interface DocumentsSaleHibDao extends CrudHibernateDao<SaleOfProduct, Integer> {
     List<SaleOfProduct> findAll();
-    boolean isCheckException();
+    SaleOfProduct findById(Integer id);
 }

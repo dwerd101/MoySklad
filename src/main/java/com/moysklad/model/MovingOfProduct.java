@@ -3,16 +3,14 @@ package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.model.interfaceModel.Model;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name="moving_of_product")
 public class MovingOfProduct implements Model {
 
@@ -31,13 +29,13 @@ public class MovingOfProduct implements Model {
      @JoinColumn(name = "warehousea_id", referencedColumnName = "id")
      @JsonProperty("warehousea_id")
      @NonNull
-     private Warehouse warehouseAId;
+     private  NumberOfWarehose warehouseAId;
 
      @ManyToOne
      @JoinColumn(name = "warehouseb_id", referencedColumnName = "id")
      @JsonProperty("warehouseb_id")
      @NonNull
-     private Warehouse warehouseBId;
+     private  NumberOfWarehose warehouseBId;
 
      @ManyToOne
      @JoinColumn(name ="list_of_product_id", referencedColumnName = "id")
