@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.moysklad.model.ArrivalOfProduct" %>
-<%@ page import="com.moysklad.view.SaleProductViewImpl" %>
+<%@ page import="com.moysklad.view.jdbcView.SaleProductViewImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,13 +32,13 @@
             </tr>
             <c:forEach items="${saleProduct}" var="product">
                 <tr>
-                    <td style="color: white; text-align: center" >${product.numberId}</td>
-                    <td style="color: white; text-align: center">${product.warehouseId}</td>
-                    <td style="color: white; text-align: center">${product.listOfProductId}</td>
-                    <td style="color: white; text-align: center">${product.productId}</td>
-                    <td style="color: white; text-align: center">${product.productName}</td>
-                    <td style="color: white; text-align: center">${product.quantity}</td>
-                    <td style="color: white; text-align: center">${product.price}</td>
+                    <td style="color: white; text-align: center" >${product.id}</td>
+                    <td style="color: white; text-align: center" >${product.numberId.getId()}</td>
+                    <td style="color: white; text-align: center">${product.warehouseId.getId()}</td>
+                    <td style="color: white; text-align: center">${product.listOfProductId.getId()}</td>
+                    <td style="color: white; text-align: center">${product.listOfProductId.getProductId().getProductName()}</td>
+                    <td style="color: white; text-align: center">${product.listOfProductId.getQuantity()}</td>
+                    <td style="color: white; text-align: center">${product.listOfProductId.getSellingPriceId().getPrice()}</td>
                 </tr>
             </c:forEach>
         </table>

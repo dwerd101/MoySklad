@@ -1,4 +1,4 @@
-package com.moysklad.view;
+package com.moysklad.view.jdbcView;
 
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import com.moysklad.view.interfaceView.View;
@@ -10,17 +10,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
-public class ArrivalProductViewImpl implements View {
+public class SaleProductViewImpl implements View {
     Connection connection;
 
     //language=sql
-    private final String SQL_SELECT_ALL_VIEW = "SELECT * from arrival_list_product";
+    private final String SQL_SELECT_ALL_VIEW = "SELECT * from sale_list_product";
 
     private int numberId, warehouseId, listOfProductId, productId, quantity, price;
     private String productName;
-    public ArrivalProductViewImpl() { }
-    public ArrivalProductViewImpl(int numberId, int warehouseId, int listOfProductId, String productName, int productId, int quantity, int price) {
+    public SaleProductViewImpl() { }
+    public SaleProductViewImpl(int numberId, int warehouseId, int listOfProductId, String productName, int productId, int quantity, int price) {
         this.numberId = numberId;
         this.warehouseId = warehouseId;
         this.listOfProductId = listOfProductId;
@@ -29,8 +30,6 @@ public class ArrivalProductViewImpl implements View {
         this.price = price;
         this.productName = productName;
     }
-
-    @Override
     public List<View> findAllView() {
         try {
             List<View> products = new ArrayList<>();
@@ -45,7 +44,7 @@ public class ArrivalProductViewImpl implements View {
                 int productId = resultSet.getInt("product_id");
                 int quantity = resultSet.getInt("quantity");
                 int price = resultSet.getInt("price");
-                ArrivalProductViewImpl productView = new ArrivalProductViewImpl(numberId, warehouseId, listOfProductId, productName, productId, quantity, price);
+                SaleProductViewImpl productView = new SaleProductViewImpl(numberId, warehouseId, listOfProductId, productName, productId, quantity, price);
                 products.add(productView);
             }
             return products;

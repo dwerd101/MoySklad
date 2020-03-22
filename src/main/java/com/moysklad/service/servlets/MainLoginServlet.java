@@ -1,7 +1,7 @@
 package com.moysklad.service.servlets;
 
-import com.moysklad.dao.domain.documentsDao.UserAccountDao;
-import com.moysklad.dao.domain.UserCrudDaoImpl;
+import com.moysklad.dao.domain.documentsDaoJdbc.UserAccountDao;
+import com.moysklad.dao.domain.JdbcDaoImpl.UserCrudDaoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,21 +1,26 @@
 package com.moysklad.model;
 
 import com.moysklad.model.interfaceModel.Model;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Data
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="user_account")
 public class UserAccount implements Model {
-    private String name, password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+    @NonNull
+    @Column(name = "name", length = 100)
+    private String name;
+    @NonNull
+    @Column(name = "password", length = 100)
+    private String password;
 
-    public UserAccount(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
 }

@@ -1,9 +1,9 @@
 package User;
 
-import com.moysklad.dao.domain.UserCrudDaoImpl;
+import com.moysklad.dao.domain.JdbcDaoImpl.UserCrudDaoImpl;
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.crypt.CryptPasswordImpl;
-import com.moysklad.dao.domain.documentsDao.UserAccountDao;
+import com.moysklad.dao.domain.documentsDaoJdbc.UserAccountDao;
 
 
 public class AddUser {

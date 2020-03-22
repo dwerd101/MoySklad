@@ -1,7 +1,7 @@
-package com.moysklad.dao.domain;
+package com.moysklad.dao.domain.JdbcDaoImpl;
 
 
-import com.moysklad.dao.domain.documentsDao.UserAccountDao;
+import com.moysklad.dao.domain.documentsDaoJdbc.UserAccountDao;
 import com.moysklad.model.UserAccount;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
 import com.moysklad.service.crypt.CryptPasswordImpl;

@@ -1,40 +1,43 @@
 package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.moysklad.model.interfaceModel.Model;
+import lombok.*;
+import lombok.extern.java.Log;
 
-public class Product {
-    //Для Jackson'a создан конструктор по умолчанию
-    public Product() {}
+import javax.persistence.*;
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name="product")
+public class Product implements Model {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @JsonProperty("id")
+    private int id;
+
+    @Column(name = "vendor_code", length = 100)
     @JsonProperty("vendor_code")
+    @NonNull
     private String vendorCode;
+
+    @Column(name = "product_name",  length = 50)
     @JsonProperty("product_name")
+    @NonNull
     private String productName;
+
+    @Column(name = "last_purchase_price")
     @JsonProperty("last_purchase_price")
+    @NonNull
     private int lastPurchasePrice;
+
+    @Column(name = "last_sale_price")
     @JsonProperty("last_sale_price")
+    @NonNull
     private int lastSalePrice;
 
-    public Product(String vendorCode, String productName, int lastPurchasePrice, int lastSalePrice) {
-        this.vendorCode = vendorCode;
-        this.productName = productName;
-        this.lastPurchasePrice = lastPurchasePrice;
-        this.lastSalePrice = lastSalePrice;
-    }
-
-    public String getVendorCode() {
-        return vendorCode;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public int getLastPurchasePrice() {
-        return lastPurchasePrice;
-    }
-
-    public int getLastSalePrice() {
-        return lastSalePrice;
-    }
 }

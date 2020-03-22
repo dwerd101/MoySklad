@@ -2,33 +2,40 @@ package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.model.interfaceModel.Model;
+import lombok.*;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name="warehouse")
 public class Warehouse implements Model {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id" , referencedColumnName = "id")
     @JsonProperty("warehouse_id")
-    private int warehouseId;
+    @NonNull
+   private NumberOfWarehose numberOfWarehoseId;
+    @ManyToOne
+    @JoinColumn(name = "product_id" , referencedColumnName = "id")
     @JsonProperty("product_id")
-    private int productId;
+    @NonNull
+    private Product productId;
+    @Column(name = "quantity")
     @JsonProperty("quantity")
+    @NonNull
     private int quantity;
-    //Для Jackson'a создан конструктор по умолчанию
-    public Warehouse(){}
 
-    public Warehouse(int warehouseId, int productId, int quantity) {
-        this.warehouseId = warehouseId;
-        this.productId = productId;
-        this.quantity = quantity;
-    }
+    /*@OneToMany(mappedBy = "warehouseId", cascade = CascadeType.ALL)
+    private Set<ArrivalOfProduct> arrivalOfProductWarehouse = new HashSet<>();*/
 
-    public int getWarehouseId() {
-        return warehouseId;
-    }
 
-    public int getProductId() {
-        return productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
 }

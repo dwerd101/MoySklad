@@ -2,34 +2,35 @@ package com.moysklad.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.model.interfaceModel.Model;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name="sale_of_product")
 public class SaleOfProduct implements Model {
 
-
-    public SaleOfProduct() {}
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "number_id" , referencedColumnName = "id")
     @JsonProperty("number_id")
-    private int numberId;
+    @NonNull
+    private NumberOfProduct numberId;
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id" , referencedColumnName = "id")
     @JsonProperty("warehouse_id")
-    private int warehouseId;
+    @NonNull
+    private NumberOfWarehose warehouseId;
+    @ManyToOne
+    @JoinColumn(name = "list_of_product_id" , referencedColumnName = "id")
     @JsonProperty("list_of_product_id")
-    private int listOfProductId;
-
-    public int getNumberId() {
-        return numberId;
-    }
-
-    public int getWarehouseId() {
-        return warehouseId;
-    }
-
-    public int getListOfProductId() {
-        return listOfProductId;
-    }
-
-    public SaleOfProduct(int numberId, int warehouseId, int listOfProductId) {
-        this.numberId = numberId;
-        this.warehouseId = warehouseId;
-        this.listOfProductId = listOfProductId;
-    }
+    @NonNull
+    private ListOfProduct listOfProductId;
 }

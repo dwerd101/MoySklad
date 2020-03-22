@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/moy_sklad</property>
+    <property name="connection.username">postgres</property>
+    <property name="connection.password">root</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <mapping class="com.moysklad.model.Product"/>
+    <mapping class="com.moysklad.model.ArrivalOfProduct"/>
+    <mapping class="com.moysklad.model.ListOfProduct"/>
+    <mapping class="com.moysklad.model.MovingOfProduct"/>
+    <mapping class="com.moysklad.model.NumberOfProduct"/>
+    <mapping class="com.moysklad.model.PurchasePrice"/>
+    <mapping class="com.moysklad.model.SaleOfProduct"/>
+    <mapping class="com.moysklad.model.SellingPrice"/>
+    <mapping class="com.moysklad.model.UserAccount"/>
+    <mapping class="com.moysklad.model.Warehouse"/>
+    <mapping class="com.moysklad.model.NumberOfWarehose"/>
+
+
+  </session-factory>
+</hibernate-configuration>

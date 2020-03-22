@@ -1,4 +1,4 @@
-package com.moysklad.view;
+package com.moysklad.view.jdbcView;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.moysklad.service.connection.ConnectionDataBaseFactory;
@@ -8,33 +8,35 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockBalancesViewImpl implements View {
+public class GeneralListOfProductViewImpl implements View {
 
     Connection connection;
-
     //language=sql
-    private final String SELECT_ALL_VIEW ="SELECT * from stock_balances";
+    private final String SELECT_ALL_VIEW ="SELECT * from general_list_of_product";
     //language=sql
-    private final String SELECT_ALL_VIEW_BY_ID = "SELECT * FROM stock_balances where warehouse_name = ?";
+    private final String SELECT_ALL_VIEW_BY_NAME = "SELECT * FROM general_list_of_product where product_name = ?";
 
     @JsonProperty("vendor_code")
-    private String vendorCode;
+    private  String vendorCode;
     @JsonProperty("product_name")
     private String productName;
-    @JsonProperty("warehouse_name")
-    private String warehouseName;
+    @JsonProperty("purchase_price")
+    private int purchasePrice;
+    @JsonProperty("selling_price")
+    private int sellingPrice;
 
-    public StockBalancesViewImpl() {}
 
-    public StockBalancesViewImpl(String vendorCode, String productName, String warehouseName) {
+    public GeneralListOfProductViewImpl() {}
+
+    public GeneralListOfProductViewImpl(String vendorCode, String productName, int purchasePrice, int sellingPrice) {
         this.vendorCode = vendorCode;
         this.productName = productName;
-        this.warehouseName = warehouseName;
+        this.purchasePrice = purchasePrice;
+        this.sellingPrice = sellingPrice;
     }
 
     @Override
     public List<View> findAllView() {
-
         try {
             List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
@@ -43,30 +45,32 @@ public class StockBalancesViewImpl implements View {
             while (resultSet.next()) {
                 String vendorCode = resultSet.getString("vendor_code");
                 String productName = resultSet.getString("product_name");
-                String warehouseId = resultSet.getString("warehouse_name");
-                StockBalancesViewImpl productView = new StockBalancesViewImpl(vendorCode, productName, warehouseId);
+                int purchasePrice = resultSet.getInt("purchase_price");
+                int sellingPrice = resultSet.getInt("selling_price");
+                GeneralListOfProductViewImpl productView = new GeneralListOfProductViewImpl(vendorCode, productName, purchasePrice, sellingPrice);
                 products.add(productView);
             }
             return products;
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+
     public List<View> findByName(String name) {
         try {
             List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_VIEW_BY_ID);
+            PreparedStatement statement = connection.prepareStatement(SELECT_ALL_VIEW_BY_NAME);
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String vendorCode = resultSet.getString("vendor_code");
                 String productName = resultSet.getString("product_name");
-                String warehouseId = resultSet.getString("warehouse_name");
-                StockBalancesViewImpl productView = new StockBalancesViewImpl(vendorCode, productName, warehouseId);
+                int purchasePrice = resultSet.getInt("purchase_price");
+                int sellingPrice = resultSet.getInt("selling_price");
+                GeneralListOfProductViewImpl productView = new GeneralListOfProductViewImpl(vendorCode, productName, purchasePrice, sellingPrice);
                 products.add(productView);
             }
             return products;

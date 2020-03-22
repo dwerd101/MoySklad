@@ -1,5 +1,5 @@
-package com.moysklad.dao.domain.documentsDao;
-import  com.moysklad.dao.CrudDao;
+package com.moysklad.dao.domain.documentsDaoJdbc;
+import com.moysklad.dao.jdbcDao.CrudDao;
 import com.moysklad.model.UserAccount;
 
 import java.util.List;
