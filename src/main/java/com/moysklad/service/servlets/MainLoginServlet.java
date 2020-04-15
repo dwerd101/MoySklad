@@ -1,14 +1,13 @@
 package com.moysklad.service.servlets;
 
-import com.moysklad.dao.domain.documentsDaoJdbc.UserAccountDao;
 import com.moysklad.dao.domain.JdbcDaoImpl.UserCrudDaoImpl;
+import com.moysklad.dao.domain.documentsDaoJdbc.UserAccountDao;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(name = "Home", value = "")
+//@WebServlet(name = "Home", value = "")
 public class MainLoginServlet extends HttpServlet {
     /** Поле аккаунт пользователя */
     private UserAccountDao userAccount;

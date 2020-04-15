@@ -7,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.moysklad.model.ArrivalOfProduct" %>
 <%@ page import="com.moysklad.view.jdbcView.ArrivalProductViewImpl" %>
@@ -14,7 +15,12 @@
 <html>
 <head>
     <title>DataBase</title>
-    <link href="${pageContext.request.contextPath}/view/css/styles.css" rel="stylesheet" type="text/css">
+   <%-- <link href="${pageContext.request.contextPath}/view/css/styles.css" rel="stylesheet" type="text/css">--%>
+
+   <%-- <spring:theme code="styleSheet" var="app_css"/>--%>
+   <%-- <spring:url value="/${app_css}" var="app_css_url" />--%>
+    <link rel="stylesheet" type="text/css" media="screen" href="/styles/styles.css">
+
 
 </head>
 <body>

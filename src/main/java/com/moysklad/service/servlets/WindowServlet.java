@@ -3,8 +3,6 @@ package com.moysklad.service.servlets;
 import com.moysklad.dao.domain.HibernateDaoImpl.service.ArrivalProductService;
 import com.moysklad.dao.domain.HibernateDaoImpl.service.MovingProductService;
 import com.moysklad.dao.domain.HibernateDaoImpl.service.SaleProductService;
-import com.moysklad.dao.domain.JdbcDaoImpl.MovingProductDaoImpl;
-import com.moysklad.dao.domain.JdbcDaoImpl.SaleProductDaoImpl;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsArrivalDao;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsMovingDao;
 import com.moysklad.dao.domain.documentsDaoJdbc.DocumentsSaleDao;
@@ -19,23 +17,22 @@ import com.moysklad.view.hibernateView.ArrivalProductHibernateViewImpl;
 import com.moysklad.view.hibernateView.MovingProductHibernateViewImpl;
 import com.moysklad.view.hibernateView.SaleProductHibernateViewImpl;
 import com.moysklad.view.interfaceView.View;
-import com.moysklad.view.jdbcView.*;
+import com.moysklad.view.jdbcView.GeneralListOfProductViewImpl;
+import com.moysklad.view.jdbcView.StockBalancesViewImpl;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
-@WebServlet(name = "MainWindowServlet", urlPatterns = { "/window/*" })
-@MultipartConfig
+/*@WebServlet(name = "MainWindowServlet", urlPatterns = { "/window/*" })
+@MultipartConfig*/
 public class WindowServlet extends HttpServlet {
 
 
