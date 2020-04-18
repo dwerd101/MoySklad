@@ -1,5 +1,6 @@
 package com.moysklad.service.json;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.moysklad.model.ArrivalOfProduct;
@@ -7,7 +8,6 @@ import com.moysklad.model.MovingOfProduct;
 import com.moysklad.model.SaleOfProduct;
 import com.moysklad.model.interfaceModel.Model;
 import com.moysklad.view.interfaceView.View;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,8 @@ import java.util.List;
 public class Converter {
     /** Поле для загрузки файла/файлов*/
     private final static String baseFile = "../webapps/root/uploads/json/";
+
+    private final static String baseFileSpring = "D:\\IDEA\\apache-tomcat-8.5.50\\temp\\";
     /** Поле для скачивания файла/файлов*/
     private final static String baseDownloadFile = "../webapps/root/downloads/json" + File.separator;
 
@@ -29,7 +31,7 @@ public class Converter {
      */
     public static List<Model> toJavaObjectList(String requestPath) throws IOException {
         List<Model> jsonToObjectList = new ArrayList<>();
-        File dir = new File(baseFile);
+        File dir = new File(baseFileSpring);
         try {
             for (File file : dir.listFiles()
             ) {
@@ -54,7 +56,8 @@ public class Converter {
             }
             return jsonToObjectList;
 
-        } catch (UnrecognizedPropertyException e) {
+
+        } catch (UnrecognizedPropertyException | JsonParseException e) {
             for (File file : dir.listFiles()
             ) {
                 if (file.delete()) {
