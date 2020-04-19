@@ -195,7 +195,7 @@ public class WindowServlet extends HttpServlet {
         switch (requestPath) {
             case "/window/arrival/view_all_documents":
                 addFilesOnServer(request);
-                this.productList = Converter.toJavaObjectList(requestPath);
+                this.productList = Converter.toJavaObjectListWithRequestPath(requestPath);
                 if (this.productList == null) {
                     request.getServletContext().getRequestDispatcher("/view/html/ArrivalProduct/ArrivalMenuError.html").forward(request, response);
                 } else if (this.productList.isEmpty()) {
@@ -207,7 +207,7 @@ public class WindowServlet extends HttpServlet {
                 break;
             case "/window/sale/view_all_documents":
                 addFilesOnServer(request);
-                this.productList = Converter.toJavaObjectList(requestPath);
+                this.productList = Converter.toJavaObjectListWithRequestPath(requestPath);
                 if (this.productList == null) {
                     request.getServletContext().getRequestDispatcher("/view/html/SaleProduct/SaleMenuError.html").forward(request, response);
                 } else if ( this.productList.isEmpty()) {
@@ -219,7 +219,7 @@ public class WindowServlet extends HttpServlet {
                 break;
             case "/window/moving/view_all_documents":
                 addFilesOnServer(request);
-                this.productList = Converter.toJavaObjectList(requestPath);
+                this.productList = Converter.toJavaObjectListWithRequestPath(requestPath);
                 if (this.productList == null) {
                     request.getServletContext().getRequestDispatcher("/view/html/MovingProduct/MovingMenuError.html").forward(request, response);
                 } else if ( this.productList.isEmpty()) {

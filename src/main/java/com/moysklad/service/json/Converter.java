@@ -28,8 +28,10 @@ public class Converter {
      * @param requestPath содержит путь части URL от имени протокола до строки запроса.
      * @return java объект
      * @throws IOException если целевой ресурс выдает это исключение.
+     * @since 1.0
      */
-    public static List<Model> toJavaObjectList(String requestPath) throws IOException {
+    @Deprecated
+    public static List<Model> toJavaObjectListWithRequestPath(String requestPath) throws IOException {
         List<Model> jsonToObjectList = new ArrayList<>();
         File dir = new File(baseFileSpring);
         try {
@@ -67,6 +69,45 @@ public class Converter {
         }
         return null;
     }
+
+    /**
+     * Преобразует JSON в Java объект.
+     * Затем удаляет файлы, которые находились по пути {@link Converter#baseFileSpring}.
+     * @param model содержит сущность Базы данных.
+     * @return java объект
+     * @throws IOException если целевой ресурс выдает это исключение.
+     * @since 2.0
+     */
+
+    public static List<Model> toJavaObjectList(Model model) throws IOException {
+        List<Model> jsonToObjectList = new ArrayList<>();
+        File dir = new File(baseFileSpring);
+        try {
+            for (File file : dir.listFiles()
+            ) {
+                ObjectMapper mapper = new ObjectMapper();
+                Model jsonToObjectArrival = mapper.readValue(file, model.getClass());
+                jsonToObjectList.add(jsonToObjectArrival);
+                if (file.delete()) {
+                    System.out.println("Успешно");
+                }
+            }
+            return jsonToObjectList;
+
+        } catch (UnrecognizedPropertyException | JsonParseException e) {
+            for (File file : dir.listFiles()
+            ) {
+                if (file.delete()) {
+                    System.out.println("Успешно");
+                }
+            }
+        }
+        return null;
+    }
+
+
+
+
 
     /**
      * Преобразует объект/объекты java в JSON.
