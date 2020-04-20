@@ -20,6 +20,10 @@
         <form action="/window/moving" method="post">
             <input type="submit" value="Перемещение"  id="form_button2" style="padding: 30px 55px;"  />
         </form>
+
+        <form action="/logout" method="post">
+            <input type="submit" value="Выход"  id="form_button3" style="padding: 30px 55px;"  />
+        </form>
     </center>
 </div>
 

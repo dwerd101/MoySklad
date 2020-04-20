@@ -15,33 +15,7 @@ import java.util.List;
 @ComponentScan(basePackages = "com.moysklad")
 public class ListConfig {
 
- /*   @Autowired
-    private Environment env;
 
-    @Bean("dataSourceJdbc")
-    public DataSource dataSource() {
-        try {
-            //  BasicDataSource dataSource = new BasicDataSource();
-            DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-            dataSource.setDriverClassName((env.getProperty("db.driver")));
-            dataSource.setUrl(env.getProperty("db.url"));
-            dataSource.setUsername(env.getProperty("db.username"));
-            dataSource.setPassword(env.getProperty("db.password"));
-            return dataSource;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-
- /*   @Bean
-    public JdbcTemplate jdbcTemplate() {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(dataSource());
-        return jdbcTemplate;
-    }*/
     @Bean
     public List<ArrivalOfProduct> arrivalOfProducts() {
         return new ArrayList<>();

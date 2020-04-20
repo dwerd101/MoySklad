@@ -177,19 +177,19 @@ public class WindowController {
                     case "report_product":
 
                         String param = request.getParameter("productName");
-                        String decodedToUTF8 = new String(param.getBytes("ISO-8859-1"), "UTF-8");
+                      //  String decodedToUTF8 = new String(param.getBytes("ISO-8859-1"), "UTF-8");
 
-                        Object freemarker = new Object();
-                        if (returnSuccessPageOrErrorPage(map, decodedToUTF8, freemarker, generalProductViewSpring.findByAllName(decodedToUTF8), generalProductViewSpring.findAllView()))
+
+                        if (returnSuccessPageOrErrorPage(map, param,  generalProductViewSpring.findByAllName(param), generalProductViewSpring.findAllView()))
                             return true;
                         downloadFileFromServer(response, views);
                         break;
                     case "report_sklad":
 
                         String requestParameter = request.getParameter("stockName");
-                        String UTF8 = new String(requestParameter.getBytes("ISO-8859-1"), "UTF-8");
-                        Object freemarkerTemplate = new Object();
-                        if (returnSuccessPageOrErrorPage(map, UTF8, freemarkerTemplate, stockBalancesViewSpring.findByAllName(UTF8), stockBalancesViewSpring.findAllView()))
+                       // String UTF8 = new String(requestParameter.getBytes("ISO-8859-1"), "UTF-8");
+
+                        if (returnSuccessPageOrErrorPage(map, requestParameter, stockBalancesViewSpring.findByAllName(requestParameter), stockBalancesViewSpring.findAllView()))
                             return true;
                         downloadFileFromServer(response, views);
                 }
@@ -197,13 +197,13 @@ public class WindowController {
         return false;
     }
 
-    private boolean returnSuccessPageOrErrorPage(ModelMap map, String requestParameter, Object freemarkerTemplate, List<View> byAllName, List<View> allView) {
+    private boolean returnSuccessPageOrErrorPage(ModelMap map, String requestParameter, List<View> byAllName, List<View> allView) {
         if (!requestParameter.isEmpty()) {
             views = byAllName;
             if (views.size() == 0) {
                 map.addAttribute("marker", null);
                 return true;
-            } else map.addAttribute("marker", freemarkerTemplate);
+            } else map.addAttribute("marker", true);
         } else {
             views = allView;
         }
@@ -240,12 +240,12 @@ public class WindowController {
 
 
     private String sendToDataBaseAndReturnPage(ModelMap map, JpaRepository a, String pageSuccess, String pageError) {
-        Object marker = new Object();
+
         List<Object> root = new ArrayList<>();
         try {
             root.addAll(json);
             a.saveAll(root);
-            map.addAttribute("success", marker);
+            map.addAttribute("success", true);
             json.clear();
             return pageSuccess;
         } catch (Exception e) {
