@@ -19,6 +19,15 @@ public class Folder {
         }
     }
 
+
+    public void createFolder(String applicationPath) {
+        String filePath = applicationPath;
+        this.folder = new File(filePath);
+        if (!this.folder.exists()) {
+            this.folder.mkdirs();
+        }
+    }
+
     /**
      * Получает имена файлов в данном каталоге.
      * @param applicationPath путь нашего веб-приложения
@@ -32,6 +41,12 @@ public class Folder {
         return dir.list();
     }
 
+
+    public String[] getFilesInDir(String applicationPath) {
+        String filepath = applicationPath;
+        File dir = new File(filepath);
+        return dir.list();
+    }
     /**
      * Возвращает <code>File</code> папку
      * @param applicationPath путь нашего веб-приложения
@@ -41,6 +56,12 @@ public class Folder {
      */
     public File getFolder(String applicationPath, String folder, String subdirectory) {
         String filepath = applicationPath + File.separator+folder+ File.separator + subdirectory + File.separator;
+        File dir = new File(filepath);
+        return dir;
+    }
+
+    public File getFolder(String applicationPath) {
+        String filepath = applicationPath;
         File dir = new File(filepath);
         return dir;
     }
@@ -65,6 +86,26 @@ public class Folder {
      */
     public void deleteListFolder(String applicationPath, String folder, String subdirectory) {
         File dir = new File(applicationPath + File.separator + folder + File.separator + subdirectory + File.separator);
+        try {
+            for (File file : dir.listFiles()
+            ) {
+                if (file.delete()) {
+                }
+            }
+        } catch (NullPointerException e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Удаляет файл/файлы в каталоге.
+     * @param applicationPath путь нашего веб-приложения
+     * @param folder каталог
+     * @param subdirectory подкаталог
+     */
+    public void deleteListFolder(String applicationPath) {
+        File dir = new File(applicationPath);
         try {
             for (File file : dir.listFiles()
             ) {

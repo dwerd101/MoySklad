@@ -123,7 +123,7 @@ public class Converter {
             ) {
                 String countString = Integer.toString(count);
                 ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.writeValue(new File(baseDownloadFile, name + countString + typeFile), product);
+                objectMapper.writeValue(new File(baseFileSpring , name + countString + typeFile), product);
                 count++;
             }
         } catch (IOException e) {

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -33,9 +34,6 @@ public class DataServiceConfig {
 
     @Autowired
     private Environment env;
-
-
-
     private static Logger logger =
             LoggerFactory.getLogger(DataServiceConfig.class);
 
@@ -47,6 +45,15 @@ public class DataServiceConfig {
     private String name;
     @Value("${db.password}")
     private String password;
+
+
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        jdbcTemplate.setDataSource(dataSource());
+        return jdbcTemplate;
+    }
+
 
     @Bean
    public DataSource dataSource() {

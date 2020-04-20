@@ -335,7 +335,7 @@ public class WindowServlet extends HttpServlet {
 
                     downloadFileFromServer(request, response, reports);
                 } else {
-                    reports = new GeneralListOfProductViewImpl().findByName(nameListArrival);
+                    reports = new GeneralListOfProductViewImpl().findByAllName(nameListArrival);
                     if (reports.size() == 0) {
                         request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/ErrorList.jsp").forward(request, response);
                     } else {
@@ -350,7 +350,7 @@ public class WindowServlet extends HttpServlet {
                     reports = new StockBalancesViewImpl().findAllView();
                     downloadFileFromServer(request, response, reports);
                 } else {
-                    reports = new StockBalancesViewImpl().findByName(nameStockArrival);
+                    reports = new StockBalancesViewImpl().findByAllName(nameStockArrival);
                     if (reports.size() == 0) {
                         request.getServletContext().getRequestDispatcher("/view/jsp/ArrivalProduct/ErrorList.jsp").forward(request, response);
                     } else {
@@ -370,7 +370,7 @@ public class WindowServlet extends HttpServlet {
                     reports = new GeneralListOfProductViewImpl().findAllView();
                     downloadFileFromServer(request, response, reports);
                 } else {
-                    reports = new GeneralListOfProductViewImpl().findByName(nameSale);
+                    reports = new GeneralListOfProductViewImpl().findByAllName(nameSale);
                     if (reports.size() == 0) {
                         request.getServletContext().getRequestDispatcher("/view/jsp/SaleProduct/ErrorList.jsp").forward(request, response);
                     } else {
@@ -385,7 +385,7 @@ public class WindowServlet extends HttpServlet {
                     reports = new StockBalancesViewImpl().findAllView();
                     downloadFileFromServer(request, response, reports);
                 } else {
-                    reports = new StockBalancesViewImpl().findByName(nameStockSale);
+                    reports = new StockBalancesViewImpl().findByAllName(nameStockSale);
                     if (reports.size() == 0) {
                         request.getServletContext().getRequestDispatcher("/view/jsp/SaleProduct/ErrorList.jsp").forward(request, response);
                     } else {
@@ -405,7 +405,7 @@ public class WindowServlet extends HttpServlet {
                     reports = new GeneralListOfProductViewImpl().findAllView();
                     downloadFileFromServer(request, response, reports);
                 } else {
-                    reports = new GeneralListOfProductViewImpl().findByName(nameMoving);
+                    reports = new GeneralListOfProductViewImpl().findByAllName(nameMoving);
                     if (reports.size() == 0) {
                         request.getServletContext().getRequestDispatcher("/view/jsp/MovingProduct/ErrorList.jsp").forward(request, response);
                     } else {
@@ -420,7 +420,7 @@ public class WindowServlet extends HttpServlet {
                     reports = new StockBalancesViewImpl().findAllView();
                     downloadFileFromServer(request, response, reports);
                 } else {
-                    reports = new StockBalancesViewImpl().findByName(nameStockMoving);
+                    reports = new StockBalancesViewImpl().findByAllName(nameStockMoving);
                     if (reports.size() == 0) {
                         request.getServletContext().getRequestDispatcher("/view/jsp/MovingProduct/ErrorList.jsp").forward(request, response);
                     } else {

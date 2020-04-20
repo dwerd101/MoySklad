@@ -7,7 +7,12 @@ import com.moysklad.model.ArrivalOfProduct;
 import com.moysklad.model.MovingOfProduct;
 import com.moysklad.model.SaleOfProduct;
 import com.moysklad.model.interfaceModel.Model;
+import com.moysklad.service.folder.Folder;
 import com.moysklad.service.json.Converter;
+import com.moysklad.service.zip.ZipArchive;
+import com.moysklad.view.interfaceView.View;
+import com.moysklad.view.jdbcSpringView.GeneralProductViewSpringImpl;
+import com.moysklad.view.jdbcSpringView.StockBalancesViewSpringImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
@@ -16,7 +21,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,11 +51,19 @@ public class WindowController {
     private List<SaleOfProduct> productSaList;
     @Autowired
     private List<MovingOfProduct> productMoList;
+    @Autowired
+    private List<View> views;
+    @Autowired
+    GeneralProductViewSpringImpl generalProductViewSpring;
+
+    @Autowired
+    StockBalancesViewSpringImpl stockBalancesViewSpring;
 
     private List json;
 
+    private static final String DOWNLOAD_DIR = "downloads";
 
-    @RequestMapping(value = "/**", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/**", method = {RequestMethod.GET})
     public String mainWindows() {
         return "redirect:/window";
     }
@@ -70,7 +88,8 @@ public class WindowController {
 
     //Реализовать Template
     @PostMapping("/window/{product}/{template}")
-    public String windowProduct(@PathVariable("product") String product, @PathVariable String template, ModelMap map, @RequestParam("fileName1") MultipartFile[] files) {
+    public String windowProduct(@PathVariable("product") String product, @PathVariable String template, ModelMap map,
+                                @RequestParam("fileName1") MultipartFile[] files) {
         switch (product) {
             case "arrival":
                 switch (template) {
@@ -83,8 +102,9 @@ public class WindowController {
                         return uploadFilesOnServerAndReturnPage(files, map, new ArrivalOfProduct(), "arrivalSendConfirm",
                                 "arrivalSendConfirm", "sentArrivalProduct");
                     case "send":
-                        return sendToDataBaseAndReturnPage(map, arrivalOfProductRepository, "arrivalSendSuccessAndGetFiles",
-                                "arrivalSendSuccessAndGetFiles");
+
+                        return sendToDataBaseAndReturnPage(map, arrivalOfProductRepository, "arrivalSendSuccessAndGetFilesErrorOrSuccess",
+                                "arrivalSendSuccessAndGetFilesErrorOrSuccess");
 
                     default:
                         return "redirect:/window";
@@ -100,8 +120,8 @@ public class WindowController {
                         return uploadFilesOnServerAndReturnPage(files, map, new SaleOfProduct(), "saleSendConfirm",
                                 "saleSendConfirm", "sentSaveProduct");
                     case "send":
-                        sendToDataBaseAndReturnPage(map,saleOfProductRepository, "saleSendSuccessAndGetFiles",
-                                "saleSendSuccessAndGetFiles");
+                       return sendToDataBaseAndReturnPage(map,saleOfProductRepository, "saleSendSuccessAndGetFilesErrorOrSuccess",
+                                "saleSendSuccessAndGetFilesErrorOrSuccess");
                     default:
                         return "redirect:/window";
                 }
@@ -117,8 +137,8 @@ public class WindowController {
                         return uploadFilesOnServerAndReturnPage(files, map, new MovingOfProduct(), "movingSendConfirm",
                                 "movingSendConfirm", "movingSaveProduct");
                     case "send":
-                        sendToDataBaseAndReturnPage(map,movingOfProductRepository, "movingSendSuccessAndGetFiles",
-                                "movingSendSuccessAndGetFiles" );
+                     return    sendToDataBaseAndReturnPage(map,movingOfProductRepository, "movingSendSuccessAndGetFilesErrorOrSuccess",
+                                "movingSendSuccessAndGetFilesErrorOrSuccess" );
 
                     default:
                         return "redirect:/window";
@@ -127,14 +147,80 @@ public class WindowController {
         return "redirect:/window";
     }
 
+    @GetMapping("/*/*/*/*")
+    public String ErrorPage() {
+        return "redirect:/window";
+    }
+
+    @RequestMapping( value = "/window/{product}/{template}/{getFiles}",produces = "text/plain;charset=UTF-8")
+    public String windowGetProductFiles(@PathVariable("product") String product, @PathVariable("template") String template,
+                                      @PathVariable("getFiles")  String getFiles, HttpServletResponse response, HttpServletRequest request, ModelMap map) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        switch (product) {
+            case "arrival":
+                if (downloadFileOrReturnPage(template, getFiles, response, request, map)) return "arrivalSendSuccessAndGetFiles";
+
+            case "sale":
+                if (downloadFileOrReturnPage(template, getFiles, response, request, map)) return "saleSendSuccessAndGetFiles";
+            case "moving":
+                if (downloadFileOrReturnPage(template, getFiles, response, request, map)) return "movingSendSuccessAndGetFiles";
+        }
+
+        return null;
+
+    }
+
+    private boolean downloadFileOrReturnPage(String template, String getFiles, HttpServletResponse response, HttpServletRequest request, ModelMap map) throws UnsupportedEncodingException {
+        switch (template) {
+            case "send":
+                switch (getFiles) {
+                    case "report_product":
+
+                        String param = request.getParameter("productName");
+                        String decodedToUTF8 = new String(param.getBytes("ISO-8859-1"), "UTF-8");
+
+                        Object freemarker = new Object();
+                        if (returnSuccessPageOrErrorPage(map, decodedToUTF8, freemarker, generalProductViewSpring.findByAllName(decodedToUTF8), generalProductViewSpring.findAllView()))
+                            return true;
+                        downloadFileFromServer(response, views);
+                        break;
+                    case "report_sklad":
+
+                        String requestParameter = request.getParameter("stockName");
+                        String UTF8 = new String(requestParameter.getBytes("ISO-8859-1"), "UTF-8");
+                        Object freemarkerTemplate = new Object();
+                        if (returnSuccessPageOrErrorPage(map, UTF8, freemarkerTemplate, stockBalancesViewSpring.findByAllName(UTF8), stockBalancesViewSpring.findAllView()))
+                            return true;
+                        downloadFileFromServer(response, views);
+                }
+        }
+        return false;
+    }
+
+    private boolean returnSuccessPageOrErrorPage(ModelMap map, String requestParameter, Object freemarkerTemplate, List<View> byAllName, List<View> allView) {
+        if (!requestParameter.isEmpty()) {
+            views = byAllName;
+            if (views.size() == 0) {
+                map.addAttribute("marker", null);
+                return true;
+            } else map.addAttribute("marker", freemarkerTemplate);
+        } else {
+            views = allView;
+        }
+        return false;
+    }
+
 
     private String returnPageViewDocument(List productList, JpaRepository a, String page, ModelMap map ){
         productList = a.findAll();
         map.addAttribute("productFromServer", productList);
         return page;
     }
-    private String uploadFilesOnServerAndReturnPage(MultipartFile[] files, ModelMap map, Model clazz, String errReturnPage, String successReturnPage,
-                                                    String ModelMapAttribute) {
+
+
+    private String uploadFilesOnServerAndReturnPage(MultipartFile[] files, ModelMap map, Model clazz,
+                                                    String errReturnPage, String successReturnPage, String ModelMapAttribute) {
+        new Folder().deleteListFolder(UPLOAD_DIR);
         try {
             for (MultipartFile file : files) {
                 if (file.isEmpty()) {
@@ -169,7 +255,34 @@ public class WindowController {
         }
     }
 
+    private void downloadFileFromServer( HttpServletResponse response, List<View> productList) {
+       try {
+        response.setContentType("application/json");
+      
+        Folder folder = new Folder();
+        folder.createFolder(UPLOAD_DIR);
+        folder.deleteListFolder(UPLOAD_DIR);
 
+        Converter.toJsonListOfProduct(productList);
+        String[] files = folder.getFilesInDir(UPLOAD_DIR);
+        File dir = folder.getFolder(UPLOAD_DIR);
+
+        if (files != null && files.length > 0) {
+
+            byte[] zip = new ZipArchive().zipFiles(dir, files);
+
+            ServletOutputStream sos = response.getOutputStream();
+            response.setContentType("application/zip");
+            response.addHeader("Content-Disposition", "attachment; filename=report.zip");
+            sos.write(zip);
+            sos.flush();
+            response.getOutputStream().flush();
+
+        }
+    }catch (IOException e) {
+           e.printStackTrace();
+       }
+    }
 
 
 }
