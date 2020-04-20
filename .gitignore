@@ -103,7 +103,5 @@ target/generated-test-sources/
 
 out/artifacts/stock_inventory_war_exploded/META-INF/MANIFEST.MF
 
-stock-inventory.iml
-Moy_sklad.iml
 
 target/
