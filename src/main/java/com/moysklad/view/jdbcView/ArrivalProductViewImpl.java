@@ -54,4 +54,9 @@ public class ArrivalProductViewImpl implements View {
         }
         return null;
     }
+
+    @Override
+    public List<View> findByAllName(String name) {
+        return null;
+    }
 }

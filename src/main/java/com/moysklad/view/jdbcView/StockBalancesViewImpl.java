@@ -55,7 +55,7 @@ public class StockBalancesViewImpl implements View {
         return null;
     }
 
-    public List<View> findByName(String name) {
+    public List<View> findByAllName(String name) {
         try {
             List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();

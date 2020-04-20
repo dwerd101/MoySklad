@@ -11,4 +11,10 @@ public interface View {
      * @return список объектов.
      */
     List<View> findAllView();
+
+    /**
+     * Ищет данные по выбранному имени из базы данных и добавляет объекты в список.
+     * @return список объектов.
+     */
+    List<View> findByAllName(String name);
 }

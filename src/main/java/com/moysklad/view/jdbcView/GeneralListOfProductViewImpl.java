@@ -42,38 +42,34 @@ public class GeneralListOfProductViewImpl implements View {
             connection = ConnectionDataBaseFactory.getConnection();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_ALL_VIEW);
-            while (resultSet.next()) {
-                String vendorCode = resultSet.getString("vendor_code");
-                String productName = resultSet.getString("product_name");
-                int purchasePrice = resultSet.getInt("purchase_price");
-                int sellingPrice = resultSet.getInt("selling_price");
-                GeneralListOfProductViewImpl productView = new GeneralListOfProductViewImpl(vendorCode, productName, purchasePrice, sellingPrice);
-                products.add(productView);
-            }
-            return products;
+            return getViews(products, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+    private List<View> getViews(List<View> products, ResultSet resultSet) throws SQLException {
+        while (resultSet.next()) {
+            String vendorCode = resultSet.getString("vendor_code");
+            String productName = resultSet.getString("product_name");
+            int purchasePrice = resultSet.getInt("purchase_price");
+            int sellingPrice = resultSet.getInt("selling_price");
+            GeneralListOfProductViewImpl productView = new GeneralListOfProductViewImpl(vendorCode, productName, purchasePrice, sellingPrice);
+            products.add(productView);
+        }
+        return products;
+    }
 
-    public List<View> findByName(String name) {
+    @Override
+    public List<View> findByAllName(String name) {
         try {
             List<View> products = new ArrayList<>();
             connection = ConnectionDataBaseFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_VIEW_BY_NAME);
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String vendorCode = resultSet.getString("vendor_code");
-                String productName = resultSet.getString("product_name");
-                int purchasePrice = resultSet.getInt("purchase_price");
-                int sellingPrice = resultSet.getInt("selling_price");
-                GeneralListOfProductViewImpl productView = new GeneralListOfProductViewImpl(vendorCode, productName, purchasePrice, sellingPrice);
-                products.add(productView);
-            }
-            return products;
+            return getViews(products, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
         }
