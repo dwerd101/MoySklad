@@ -101,8 +101,6 @@ public class Folder {
     /**
      * Удаляет файл/файлы в каталоге.
      * @param applicationPath путь нашего веб-приложения
-     * @param folder каталог
-     * @param subdirectory подкаталог
      */
     public void deleteListFolder(String applicationPath) {
         File dir = new File(applicationPath);

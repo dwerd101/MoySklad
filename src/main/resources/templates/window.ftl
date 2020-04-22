@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Login</title>
-    <link href="/view/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="/styles/styles.css" rel="stylesheet" type="text/css">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
@@ -19,6 +19,10 @@
         </form>
         <form action="/window/moving" method="post">
             <input type="submit" value="Перемещение"  id="form_button2" style="padding: 30px 55px;"  />
+        </form>
+
+        <form action="/logout" method="post">
+            <input type="submit" value="Выход"  id="form_button3" style="padding: 30px 55px;"  />
         </form>
     </center>
 </div>

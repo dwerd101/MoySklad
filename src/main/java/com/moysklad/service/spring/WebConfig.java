@@ -16,9 +16,9 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 //DispatcherServlet
-@Configuration
+/*@Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.moysklad")
+@ComponentScan(basePackages = "com.moysklad")*/
 public class WebConfig implements WebMvcConfigurer {
     //<mvc:resources ... />
     @Override
