@@ -39,7 +39,7 @@ public class Converter {
     @Deprecated
     public static List<Model> toJavaObjectListWithRequestPath(String requestPath) throws IOException {
         List<Model> jsonToObjectList = new ArrayList<>();
-        File dir = new File(baseFileSpring);
+        File dir = new File(baseFile);
         try {
             for (File file : dir.listFiles()
             ) {
@@ -87,7 +87,7 @@ public class Converter {
 
     public static List<Model> toJavaObjectList(Model model) throws IOException {
         List<Model> jsonToObjectList = new ArrayList<>();
-        File dir = new File(baseFile);
+        File dir = new File(baseFileSpring);
         try {
             for (File file : dir.listFiles()
             ) {
