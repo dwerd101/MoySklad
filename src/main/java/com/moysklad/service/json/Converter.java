@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PropertySource("classpath:converter.properties")
-@Component
 public class Converter {
     /** Поле для загрузки файла/файлов*/
     private final static String baseFile = "../webapps/root/uploads/json/";
