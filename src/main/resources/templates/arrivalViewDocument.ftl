@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>DataBase</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="/styles/styles.css">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="container">

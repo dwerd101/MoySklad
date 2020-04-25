@@ -65,7 +65,7 @@ public class WindowController {
 
     private static final String DOWNLOAD_DIR = "downloads";
 
-    @RequestMapping(value = "/**", method = {RequestMethod.GET})
+    @RequestMapping(value = "/", method = {RequestMethod.GET})
     public String mainWindows() {
         return "redirect:/window";
     }
