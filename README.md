@@ -1,7 +1,13 @@
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Spring_Framework_Logo_2018.svg/1280px-Spring_Framework_Logo_2018.svg.png" 
- alt="Spring"  height="200"  /></p>
-
-
+ alt="Spring"  height="100"  />
+  <img src = "https://www.svgrepo.com/show/13238/plus-cross.svg"
+   alt="Spring"  height="100" />
+ <img src="https://alexkosarev.name/wp-content/uploads/2019/01/spring_boot_logo.png" 
+  alt="Spring Boot"  height="100"  />
+  
+ 
+ </p>
+<p align="right"></p>
 
 # Веб-приложение по учету товаров на складе
 Всем привет! Это мой первый веб-проект написанный на Java! Не судите строго 😃
@@ -16,11 +22,11 @@
 
 ## Разработка
 - Язык разработки: **Java 8**
-- Фреймворк: Spring 5.1.14
+- Фреймворк: **Spring 5.1.14 (есть, но не используется), Spring Boot 2.2.6**
 - Сурбд: **PostgreSQL 10.12**
-- JPA: Hibernate 5.3.14.Final, Spring Data Jpa 2.1.16.RELEASE
-- JDBC: Spring JDBC 5.1.14.RELEASE
-- Security: Spring Security 5.1.9.RELEASE
+- JPA: **Hibernate 5.3.14.Final, Spring Data Jpa 2.1.16.RELEASE**
+- JDBC: **Spring JDBC 5.1.14.RELEASE**
+- Security: **Spring Security 5.1.9.RELEASE**
 - Сборка: **Maven**
 ## API
 
