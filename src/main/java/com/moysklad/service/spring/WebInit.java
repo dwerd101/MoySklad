@@ -10,7 +10,7 @@ import javax.servlet.ServletRegistration;
 import java.io.File;
 
 //web.xml
-@Order(1)
+/*@Order(1)*/
 public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     private int maxUploadSizeInMb = 5 * 1024 * 1024;//5 MB

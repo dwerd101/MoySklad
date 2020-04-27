@@ -8,12 +8,18 @@ import com.moysklad.model.MovingOfProduct;
 import com.moysklad.model.SaleOfProduct;
 import com.moysklad.model.interfaceModel.Model;
 import com.moysklad.view.interfaceView.View;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@PropertySource("classpath:converter.properties")
 public class Converter {
     /** Поле для загрузки файла/файлов*/
     private final static String baseFile = "../webapps/root/uploads/json/";
@@ -24,7 +30,7 @@ public class Converter {
 
     /**
      * Преобразует JSON в Java объект.
-     * Затем удаляет файлы, которые находились по пути {@link Converter#baseFile}.
+     * Затем удаляет файлы, которые находились по пути {@link Converter#baseFileSpring}.
      * @param requestPath содержит путь части URL от имени протокола до строки запроса.
      * @return java объект
      * @throws IOException если целевой ресурс выдает это исключение.
@@ -33,7 +39,7 @@ public class Converter {
     @Deprecated
     public static List<Model> toJavaObjectListWithRequestPath(String requestPath) throws IOException {
         List<Model> jsonToObjectList = new ArrayList<>();
-        File dir = new File(baseFileSpring);
+        File dir = new File(baseFile);
         try {
             for (File file : dir.listFiles()
             ) {

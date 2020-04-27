@@ -25,11 +25,11 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 
-@Configuration
+/*@Configuration
 @EnableJpaRepositories(basePackages = "com.moysklad.dao.spring")
 @ComponentScan(basePackages = "com.moysklad")
 @PropertySource("classpath:modelDataBase/properties/db.properties")
-@EnableTransactionManagement
+@EnableTransactionManagement*/
 public class DataServiceConfig {
 
     @Autowired

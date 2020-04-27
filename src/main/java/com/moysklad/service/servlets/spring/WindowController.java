@@ -14,6 +14,8 @@ import com.moysklad.view.interfaceView.View;
 import com.moysklad.view.jdbcSpringView.GeneralProductViewSpringImpl;
 import com.moysklad.view.jdbcSpringView.StockBalancesViewSpringImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -63,7 +65,7 @@ public class WindowController {
 
     private static final String DOWNLOAD_DIR = "downloads";
 
-    @RequestMapping(value = "/**", method = {RequestMethod.GET})
+    @RequestMapping(value = "/", method = {RequestMethod.GET})
     public String mainWindows() {
         return "redirect:/window";
     }
